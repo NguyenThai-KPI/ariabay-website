@@ -25,7 +25,7 @@
         .nav-links a:hover { color: #8c6d23; }
         
         footer { background-color: #3e2129; padding: 40px 20px; text-align: center; border-top: 1px solid rgba(0,0,0,0.1); margin-top: 100px; color: #ffffff;}
-        .footer-logo { color: #d4af37; font-size: 1.8rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; }
+        .footer-logo { color: #d4af37; font-size: 1.8rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; font-family: 'Oswald', sans-serif; }
         .footer-text { color: #cccccc; font-size: 0.9rem; line-height: 1.8; }
         .footer-text a { color: #d4af37; text-decoration: none; }
                 .splash-screen {
@@ -34,36 +34,6 @@
             overflow: hidden; /* Cắt bỏ phần ảnh bị phình ra khi phóng to */
         }
 
-        .splash-bg {
-            position: absolute;
-            /* CÀI ĐẶT MỚI: Làm ảnh cao hơn màn hình và đặt hơi nhô lên trên một chút */
-            top: -15vh;
-            left: 0;
-            width: 100%;
-            height: 130vh; /* Cao hơn màn hình 20% (để có "room" di chuyển lên mà không hở đáy) */
-            
-            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('halong-aria.webp'); 
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-            /* XÓA transition cũ để JS điều khiển trực tiếp mượt mà hơn */
-        }
-
-        .splash-content {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1; /* Nổi chữ lên trên ảnh */
-        }
-
-        .splash-logo { text-align: center; }
-        .logo-text {
-            font-family: 'Oswald', sans-serif; font-size: 4rem; color: #ffffff;
-            letter-spacing: 6px; font-weight: 500; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-        }
 
         .scroll-icon {
             position: absolute; bottom: 40px; color: #ffffff; font-size: 3rem;
@@ -476,23 +446,12 @@
             <a href="index.html">TRANG CHỦ</a>
             <a href="index.html#gioi-thieu">GIỚI THIỆU</a>
             <a href="index.html#vi-tri">VỊ TRÍ</a>
+            <a href="tien-ich.html">TIỆN ÍCH</a>
             <a href="san-pham.html">SẢN PHẨM</a>
             <a href="index.html#lien-he">LIÊN HỆ</a>
         </nav>
     </header>
 
-    <section class="splash-screen" id="trang-chu">
-        <div class="splash-bg" id="splashBg"></div>
-        
-        <div class="splash-content">
-            <div class="splash-logo">
-                <div class="logo-text">ARIA BAY</div>
-            </div>
-            <div class="scroll-icon">
-                <span class="music-note">𝄞</span>
-            </div>
-        </div>
-    </section>
 
     <section class="project-overview">
         <div class="overview-container">

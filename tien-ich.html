@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiện Ích - Aria Bay</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CÀI ĐẶT CHUNG VÀ MENU --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Be Vietnam Pro', sans-serif; 
+            background-color: #b4bcc8; 
+            color: #333333; 
+            padding-top: 80px;
+        }
+
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; background-color: #e6d8c8; padding: 15px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .nav-logo { font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 500; color: #333333; letter-spacing: 2px; }
+        .nav-links { display: flex; gap: 35px; }
+        .nav-links a { text-decoration: none; color: #333333; font-family: 'Oswald', sans-serif; font-size: 1.1rem; font-weight: 500; text-transform: uppercase; transition: color 0.3s; }
+        .nav-links a:hover { color: #8c6d23; }
+        
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: #333333; }
+
+        /* --- KHU VỰC TIỆN ÍCH (Sử dụng lại bố cục Tab của trang Sản phẩm) --- */
+        .amenities-section {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            color: #3e2129;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Thanh Menu Bấm (Tabs) */
+        .tab-menu {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 50px;
+            border-bottom: 1px solid #d4c4b4;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-size: 1.1rem;
+            color: #777;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: #3e2129;
+            font-weight: 500;
+            border-bottom: 2px solid #3e2129;
+        }
+
+        .tab-button:hover { color: #3e2129; }
+
+        /* Nội dung bên trong từng Tab */
+        .tab-content {
+            display: none; 
+            animation: fadeIn 0.5s ease; 
+        }
+
+        .tab-content.active {
+            display: flex; 
+            align-items: center;
+            gap: 50px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-image { flex: 6; }
+        .tab-image img { width: 100%; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); object-fit: cover; aspect-ratio: 4/3; }
+
+        .tab-info { flex: 4; }
+        .tab-info h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .tab-info p.desc {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #d4c4b4;
+            padding-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .info-row span { color: #666; }
+        .info-row strong { color: #222; font-weight: 500; text-align: right; max-width: 60%;}
+        /* --- [MỚI] TRÌNH CHIẾU ẢNH (SLIDER) CHO TIỆN ÍCH --- */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            aspect-ratio: 4/3; /* Giữ tỷ lệ khung hình cố định cho mọi ảnh */
+            background-color: #ccc; /* Màu nền chờ khi ảnh chưa tải xong */
+        }
+
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slider-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0; /* Ẩn tất cả ảnh đi */
+            transition: opacity 0.5s ease-in-out; /* Hiệu ứng mờ ảo khi chuyển ảnh */
+            z-index: 1;
+        }
+
+        .slider-wrapper img.active {
+            opacity: 1; /* Chỉ hiện bức ảnh đang được chọn */
+            z-index: 2;
+        }
+
+        /* Nút mũi tên Trái - Phải */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(62, 33, 41, 0.6); /* Nền màu đỏ đô trong suốt */
+            color: #fff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 3; /* Nổi lên trên cùng */
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slider-btn:hover { background-color: rgba(62, 33, 41, 1); }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+
+        /* --- CHÂN TRANG --- */
+        footer { background-color: #3e2129; padding: 40px 20px; text-align: center; border-top: 1px solid rgba(0,0,0,0.1); margin-top: 100px; color: #ffffff;}
+        .footer-logo { color: #d4af37; font-size: 1.8rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; font-family: 'Oswald', sans-serif; }
+        .footer-text { color: #cccccc; font-size: 0.9rem; line-height: 1.8; }
+        .footer-text a { color: #d4af37; text-decoration: none; }
+
+        /* --- RESPONSIVE CHO ĐIỆN THOẠI --- */
+        @media screen and (max-width: 768px) {
+            .navbar { padding: 15px 20px; flex-direction: row; justify-content: space-between; }
+            .menu-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: #e6d8c8; padding: 0; box-shadow: 0 10px 15px rgba(0,0,0,0.1); gap: 0; }
+            .nav-links.show { display: flex; }
+            .nav-links a { padding: 18px 20px; border-bottom: 1px solid #d4c4b4; width: 100%; text-align: center; font-size: 1.1rem; }
+            
+            body { padding-top: 60px; }
+            
+            .amenities-section { padding: 40px 10px; margin: 20px auto; }
+            .section-header h2 { font-size: 2rem; }
+            .tab-menu { flex-wrap: wrap; gap: 10px; }
+            .tab-button { font-size: 1rem; padding: 8px 10px; }
+            
+            /* Bẻ gãy cột thành hàng dọc trên điện thoại */
+            .tab-content.active { flex-direction: column !important; gap: 20px; }
+            .tab-image, .tab-info { width: 100%; flex: auto; padding: 0 10px;}
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-logo">ARIA BAY</div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav class="nav-links" id="mobileMenu">
+            <a href="index.html">TRANG CHỦ</a>
+            <a href="index.html#gioi-thieu">GIỚI THIỆU</a>
+            <a href="index.html#vi-tri">VỊ TRÍ</a>
+            <a href="tien-ich.html">TIỆN ÍCH</a>
+            <a href="san-pham.html">SẢN PHẨM</a>
+            <a href="index.html#lien-he">LIÊN HỆ</a>
+        </nav>
+    </header>
+
+    <section class="amenities-section">
+        
+        <div class="section-header">
+            <h2>HỆ SINH THÁI TIỆN ÍCH 5 SAO</h2>
+            <p>Đặc quyền vượt trội dành riêng cho những chủ nhân danh giá tại Aria Bay.</p>
+        </div>
+
+        <div class="tab-menu">
+            <button class="tab-button active" onclick="openTab(event, 'HoBoi')">Hồ Bơi Rooftop</button>
+            <button class="tab-button" onclick="openTab(event, 'Gym')">Elite Fitness</button>
+            <button class="tab-button" onclick="openTab(event, 'NhaHang')">Nhà Hàng Á - Âu</button>
+        </div>
+
+        <div id="HoBoi" class="tab-content active">
+            <div class="tab-image slider-container">
+                <button class="slider-btn prev-btn" onclick="changeSlide(this, -1)">&#10094;</button>
+                <div class="slider-wrapper">
+                    <img src="ho-boi-1.jpg" class="slide active" alt="Hồ Bơi 1">
+                    <img src="ho-boi-2.png" class="slide" alt="Hồ Bơi 2">
+                    <img src="ho-boi-3.png" class="slide" alt="Hồ Bơi 3">
+                </div>
+                <button class="slider-btn next-btn" onclick="changeSlide(this, 1)">&#10095;</button>
+            </div>
+            <div class="tab-info">
+                <h3>Hồ Bơi ROOFTOP Bốn Mùa</h3>
+                <p class="desc">Trải nghiệm thư giãn sang trọng giữa tầng không. Hồ bơi được thiết kế với công nghệ điều nhiệt hiện đại, đảm bảo không gian bơi lội hoàn hảo suốt 4 mùa.</p>
+                <div class="info-row"><span>Vị trí:</span> <strong>Tầng 40 (Tầng cao nhất)</strong></div>
+                <div class="info-row"><span>Tầm nhìn:</span> <strong>Panorama Vịnh di sản</strong></div>
+                <div class="info-row"><span>Đặc quyền:</span> <strong>Chỉ dành cho cư dân Aria Bay</strong></div>
+            </div>
+        </div>
+
+        <div id="Gym" class="tab-content">
+            <div class="tab-image slider-container">
+                <button class="slider-btn prev-btn" onclick="changeSlide(this, -1)">&#10094;</button>
+                <div class="slider-wrapper">
+                    <img src="gym-1.png" class="slide active" alt="Gym 1">
+                    <img src="gym-2.webp" class="slide" alt="Gym 2">
+                    <img src="gym-3.jpg" class="slide" alt="Gym 3">
+                </div>
+                <button class="slider-btn next-btn" onclick="changeSlide(this, 1)">&#10095;</button>
+            </div>
+            <div class="tab-info">
+                <h3>Elite Fitness Center</h3>
+                <p class="desc">Phòng tập với trang thiết bị tối tân, cùng đội ngũ huấn luyện viên chuyên nghiệp sẵn sàng hỗ trợ. Không gian năng động khơi nguồn cảm hứng luyện tập mỗi ngày.</p>
+                <div class="info-row"><span>Trang thiết bị:</span> <strong>Nhập khẩu 100% từ Châu Âu</strong></div>
+                <div class="info-row"><span>Dịch vụ đi kèm:</span> <strong>PT Cá nhân, Yoga, Pilates</strong></div>
+                <div class="info-row"><span>Giờ hoạt động:</span> <strong>24/7</strong></div>
+            </div>
+        </div>
+
+        <div id="NhaHang" class="tab-content">
+            <div class="tab-image slider-container">
+                <button class="slider-btn prev-btn" onclick="changeSlide(this, -1)">&#10094;</button>
+                <div class="slider-wrapper">
+                    <img src="nha-hang-1.jpg" class="slide active" alt="Nhà Hàng 1">
+                    <img src="nha-hang-2.jpg" class="slide" alt="Nhà Hàng 2">
+                </div>
+                <button class="slider-btn next-btn" onclick="changeSlide(this, 1)">&#10095;</button>
+            </div>
+            <div class="tab-info">
+                <h3>Nhà Hàng Ẩm Thực Á - Âu</h3>
+                <p class="desc">Tinh hoa ẩm thực đa quốc gia được chế biến bởi các đầu bếp trứ danh ngay trong khuôn viên dự án. Nơi hoàn hảo cho những buổi tiệc sang trọng hay bữa tối lãng mạn.</p>
+                <div class="info-row"><span>Phong cách:</span> <strong>Fine Dining đương đại</strong></div>
+                <div class="info-row"><span>Không gian:</span> <strong>Mở, hướng biển trực diện</strong></div>
+                <div class="info-row"><span>Sức chứa:</span> <strong>Lên đến 200 khách VIP</strong></div>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <div class="footer-logo">ARIA BAY</div>
+        <p class="footer-text">
+            <strong>Địa chỉ:</strong> Bán đảo 3, Khu đô thị Vịnh biển Halong Marina, Quảng Ninh <br>
+            <strong>Hotline:</strong> 0782.145.432 | <strong>Email:</strong> nguyennam20001020@gmail.com <br>
+            <strong>Facebook:</strong> <a href="https://www.facebook.com/share/1HR28WSmP5/" target="_blank">Nhấp vào đây để liên hệ</a> <br>
+            &copy; Một trang dự án được thiết kế bởi <a href="https://www.facebook.com/share/1HR28WSmP5/" target="_blank">Nguyễn Nam</a>.
+        </p>
+    </footer>
+
+    <script>
+        // Chuyển Tab Tiện ích
+        function openTab(evt, tabName) {
+            var tabContents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            var tabButtons = document.getElementsByClassName("tab-button");
+            for (var i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Đóng mở Menu trên Điện thoại
+        function toggleMenu() {
+            document.getElementById("mobileMenu").classList.toggle("show");
+        }
+        var menuLinks = document.querySelectorAll(".nav-links a");
+        menuLinks.forEach(function(link) {
+            link.addEventListener("click", function() {
+                document.getElementById("mobileMenu").classList.remove("show");
+            });
+        });
+        // --- CHỨC NĂNG CHUYỂN ẢNH (SLIDER) ---
+        function changeSlide(btn, direction) {
+            // Tìm cái hộp chứa slider hiện tại mà người dùng đang bấm
+            var container = btn.closest('.slider-container');
+            // Tìm tất cả các ảnh bên trong cái hộp đó
+            var slides = container.querySelectorAll('.slide');
+            
+            var activeIndex = 0;
+            // Tìm xem ảnh nào đang được hiện ra (có class 'active')
+            for (var i = 0; i < slides.length; i++) {
+                if (slides[i].classList.contains('active')) {
+                    activeIndex = i;
+                    slides[i].classList.remove('active'); // Ẩn ảnh cũ đi
+                    break;
+                }
+            }
+            
+            // Tính toán vị trí ảnh tiếp theo
+            var newIndex = activeIndex + direction;
+            if (newIndex >= slides.length) newIndex = 0; // Đang ở cuối thì quay lại đầu
+            if (newIndex < 0) newIndex = slides.length - 1; // Đang ở đầu bấm lùi thì nhảy xuống cuối
+            
+            // Hiện ảnh mới lên
+            slides[newIndex].classList.add('active');
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Lấy tín hiệu 'tab' từ thanh địa chỉ URL (ví dụ: ?tab=Gym)
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabName = urlParams.get('tab');
+
+            // Nếu có tín hiệu gửi đến và tìm thấy ID tab đó trên trang
+            if (tabName && document.getElementById(tabName)) {
+                
+                // 1. Ẩn tất cả các nội dung tab đi
+                var tabContents = document.getElementsByClassName("tab-content");
+                for (var i = 0; i < tabContents.length; i++) {
+                    tabContents[i].classList.remove("active");
+                }
+                
+                // 2. Tắt hiệu ứng 'đang chọn' của tất cả các nút
+                var tabButtons = document.getElementsByClassName("tab-button");
+                for (var i = 0; i < tabButtons.length; i++) {
+                    tabButtons[i].classList.remove("active");
+                }
+
+                // 3. Mở đúng tab nội dung được yêu cầu
+                document.getElementById(tabName).classList.add("active");
+
+                // 4. Bật sáng đúng cái nút tương ứng trên menu
+                for (var i = 0; i < tabButtons.length; i++) {
+                    if (tabButtons[i].getAttribute("onclick").includes(tabName)) {
+                        tabButtons[i].classList.add("active");
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
