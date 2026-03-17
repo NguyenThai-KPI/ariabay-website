@@ -316,24 +316,57 @@
         .footer-logo { color: #d4af37; font-size: 1.8rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; }
         .footer-text { color: #888; font-size: 0.9rem; line-height: 1.8; }
         .footer-text a { color: #d4af37; text-decoration: none; }
+        /* Ẩn nút 3 gạch trên máy tính */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #333333;
+        }
 
         /* =========================================
            THIẾT KẾ THÍCH ỨNG CHO ĐIỆN THOẠI (RESPONSIVE)
            ========================================= */
         @media screen and (max-width: 768px) {
-            /* 1. Sửa Thanh Menu: Xếp dọc lại cho vừa màn hình */
-            .navbar { padding: 15px 20px; flex-direction: column; gap: 15px; }
-            .nav-links { gap: 15px; flex-wrap: wrap; justify-content: center; font-size: 0.9rem; }
-            body { padding-top: 120px; } /* Đẩy nội dung xuống sâu hơn vì menu dọc chiếm nhiều chỗ */
-
-            /* 2. Ép các bố cục 2 cột (Trái/Phải) biến thành Xếp Dọc (Trên/Dưới) */
-            .tab-content.active,
-            .tower-display-wrapper,
-            .overview-container,
-            .overview-bottom {
-                flex-direction: column;
-                gap: 20px;
+           /* --- MENU 3 GẠCH CHO ĐIỆN THOẠI --- */
+            .navbar { 
+                padding: 15px 20px; 
+                flex-direction: row; /* Ép Logo và Nút 3 gạch nằm ngang hàng nhau */
+                justify-content: space-between; /* Đẩy Logo sang trái, Nút sang phải */
             }
+            
+            .menu-toggle {
+                display: block; /* Hiện nút 3 gạch lên */
+            }
+
+            .nav-links {
+                display: none; /* Ẩn các chữ đi lúc mới vào trang */
+                flex-direction: column;
+                position: absolute; /* Thả trôi menu xuống dưới thanh logo */
+                top: 100%; 
+                left: 0;
+                width: 100%;
+                background-color: #e6d8c8;
+                padding: 0;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1); /* Đổ bóng cho menu nổi lên */
+                gap: 0;
+            }
+
+            /* Class này sẽ được JavaScript gọi tên để Mở menu ra */
+            .nav-links.show {
+                display: flex;
+            }
+
+            /* Biến các dòng chữ thành các "Nút bấm" to, dễ chạm */
+            .nav-links a {
+                padding: 18px 20px;
+                border-bottom: 1px solid #d4c4b4;
+                width: 100%;
+                text-align: center;
+                font-size: 1.1rem;
+            }
+            
+            body { padding-top: 60px; } /* Trả lại khoảng cách chuẩn cho thân trang */
 
             /* 3. Cho ảnh và chữ phóng to chiếm trọn 100% chiều ngang điện thoại */
             .tower-image-col, .tab-image, .overview-image { width: 100%; flex: auto; }
@@ -406,6 +439,41 @@
             font-size: 0.95rem;
             color: #ccc;
         }
+        /* --- 3. SỬA LỖI KHỐI THIẾT KẾ ĐỘC BẢN --- */
+        .about-container {
+            flex-direction: column; /* Phá vỡ bố cục ngang, xếp thành hàng dọc */
+            gap: 30px; /* Tạo khoảng cách an toàn giữa chữ và ảnh */
+            padding: 20px 10px;
+        }
+
+        .about-text {
+            width: 100% !important; /* Ép khối chữ bung rộng 100% màn hình */
+            padding: 0 !important;
+            text-align: justify; /* Căn lề 2 bên cho khối chữ vuông vức */
+        }
+
+        .about-image {
+            width: 100% !important; /* Ép khối ảnh bung rộng 100% */
+            padding: 0 !important;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px; /* Bo góc ảnh nhẹ nhàng cho đẹp mắt */
+        }
+
+        /* Chỉnh lại cỡ chữ cho tiêu đề và nội dung vừa vặn với mắt nhìn trên điện thoại */
+        .section-title {
+            font-size: 2rem !important;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
         }
     </style>
 </head>
@@ -413,12 +481,15 @@
     <body>
     <header class="navbar">
         <div class="nav-logo">ARIA BAY</div>
-        <nav class="nav-links">
-            <a href="#trang-chu">TRANG CHỦ</a>
-            <a href="#gioi-thieu">GIỚI THIỆU</a>
-            <a href="#vi-tri">VỊ TRÍ</a>
+        
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        
+        <nav class="nav-links" id="mobileMenu">
+            <a href="index.html">TRANG CHỦ</a>
+            <a href="index.html#gioi-thieu">GIỚI THIỆU</a>
+            <a href="index.html#vi-tri">VỊ TRÍ</a>
             <a href="san-pham.html">SẢN PHẨM</a>
-            <a href="#lien-he">LIÊN HỆ</a>
+            <a href="index.html#lien-he">LIÊN HỆ</a>
         </nav>
     </header>
 
@@ -619,6 +690,20 @@
             var diChuyenY = -cuonChuot * 0.1; 
             
             anhNen.style.transform = 'translateY(' + diChuyenY + 'px)';
+        });
+    </script>
+    <script>
+        function toggleMenu() {
+            // Tắt/Bật class "show" để ẩn/hiện menu
+            document.getElementById("mobileMenu").classList.toggle("show");
+        }
+
+        // Tự động đóng menu sau khi khách đã bấm chọn 1 mục
+        var menuLinks = document.querySelectorAll(".nav-links a");
+        menuLinks.forEach(function(link) {
+            link.addEventListener("click", function() {
+                document.getElementById("mobileMenu").classList.remove("show");
+            });
         });
     </script>
 </body>
