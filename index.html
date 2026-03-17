@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự Án Tương Lai - Tinh Hoa Kiến Trúc</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        
+        /* --- TẦNG 0: CÀI ĐẶT CHUNG --- */
+        /* Lùi vị trí cuộn xuống 80px để không bị thanh menu che mất tiêu đề */
+        section[id] {
+            scroll-margin-top: 50px; 
+        }
+
+/* --- [MỚI] BẢN ĐỒ VỊ TRÍ --- */
+        .map-section {
+            width: 100%;
+            background-color: #0b0b0b; /* Màu nền đen đồng bộ với trang web */
+            /* CÀI ĐẶT MỚI: Xóa khoảng trống (padding) để ảnh chạm sát mép trên/dưới */
+            padding: 0; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .map-image {
+            width: 100%;
+            /* CÀI ĐẶT MỚI: Xóa max-width, ép nó rộng đúng bằng 100% màn hình */
+            max-width: none; 
+            display: block;
+            margin: 0;
+            border: none; /* Đảm bảo không có viền nào */
+            outline: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Be Vietnam Pro', sans-serif; /* Đổi sang font chữ thanh mảnh, hiện đại */
+            background-color: #0b0b0b; 
+            color: #ffffff; 
+        }
+        /* --- [MỚI] THANH ĐIỀU HƯỚNG (MENU NAV) --- */
+        .navbar {
+            position: fixed; /* Ghim chặt menu lên đầu trang */
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #e6d8c8; /* Màu nền be giống ảnh tham khảo */
+            padding: 15px 60px;
+            display: flex;
+            justify-content: space-between; /* Đẩy Logo sang trái, Menu sang phải */
+            align-items: center;
+            z-index: 1000; /* Trị số cực lớn để menu luôn nổi lên trên cùng mọi bức ảnh */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Tạo bóng đổ nhẹ xuống dưới */
+        }
+
+        .nav-logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #333333;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px; /* Khoảng cách giữa các chữ trong menu */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333333; /* Chữ màu xám đậm */
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #8c6d23; /* Đổi sang màu vàng nâu khi di chuột vào */
+        }
+       /* --- MÀN HÌNH CHÀO (SPLASH SCREEN) --- */
+        .splash-screen {
+            position: relative;
+            height: 100vh;
+            overflow: hidden; /* Cắt bỏ phần ảnh bị phình ra khi phóng to */
+        }
+
+        .splash-bg {
+            position: absolute;
+            /* CÀI ĐẶT MỚI: Làm ảnh cao hơn màn hình và đặt hơi nhô lên trên một chút */
+            top: -15vh;
+            left: 0;
+            width: 100%;
+            height: 130vh; /* Cao hơn màn hình 20% (để có "room" di chuyển lên mà không hở đáy) */
+            
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('halong-aria.webp'); 
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            /* XÓA transition cũ để JS điều khiển trực tiếp mượt mà hơn */
+        }
+
+        .splash-content {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1; /* Nổi chữ lên trên ảnh */
+        }
+
+        .splash-logo { text-align: center; }
+        .logo-text {
+            font-family: 'Oswald', sans-serif; font-size: 4rem; color: #ffffff;
+            letter-spacing: 6px; font-weight: 500; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .scroll-icon {
+            position: absolute; bottom: 40px; color: #ffffff; font-size: 3rem;
+            animation: bounce 2s infinite; text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+
+        .splash-logo { text-align: center; }
+
+        .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 4rem; /* Chữ logo to rõ */
+            color: #ffffff;
+            letter-spacing: 6px;
+            font-weight: 500;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5); /* Đổ bóng nhẹ để nổi bật trên nền ảnh */
+        }
+
+        /* Biểu tượng cuộn xuống */
+        .scroll-icon {
+            position: absolute;
+            bottom: 40px; /* Cách đáy 40px */
+            color: #ffffff;
+            font-size: 3rem;
+            animation: bounce 2s infinite; /* Hiệu ứng nhấp nhô liên tục */
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* Tạo hiệu ứng nhấp nhô cho nốt nhạc */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+
+        /* --- TẦNG 1: HERO BANNER --- */
+        .hero {
+            height: 100vh;
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('bg-halong.jpg.png'); 
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            padding: 0 20px; /* Thêm khoảng trống 2 bên để chữ không chạm lề khi xem trên điện thoại */
+        }
+        
+        .hero-subtitle { 
+            font-size: 0.9rem; 
+            letter-spacing: 6px; /* Kéo giãn chữ ra một chút cho sang */
+            color: #d4af37; 
+            margin-bottom: 15px; 
+            font-weight: 400;
+        }
+        
+        .hero-title { 
+            font-family: 'Oswald', sans-serif; /* Áp dụng font dáng cao cho Tiêu đề */
+            font-size: 4.5rem; /* Chữ to hơn một chút */
+            font-weight: 400; 
+            margin-bottom: 5px; /* Kéo gần lại với dòng chữ bên dưới */
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+        }
+        
+        .hero-desc { 
+            font-size: 1.2rem; 
+            font-weight: 300; 
+            letter-spacing: 6px; 
+            color: #cccccc; 
+            text-transform: uppercase; 
+            margin-bottom: 30px; /* Tạo khoảng trống trước khi đến đoạn văn dài */
+        }
+
+        .hero-intro-text {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            max-width: 850px; /* Gom chiều rộng lại một chút nữa cho giống ảnh gốc */
+            font-weight: 300; 
+            color: #ffffff;
+        }
+
+        /* --- PHẦN MỚI 1: VỊ TRÍ HÀNG GHẾ ĐẦU (Ảnh 386) --- */
+        .location-section {
+            background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%), url('vitri-ngoi.jfif');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            padding: 120px 20px;
+        }
+        .location-content { max-width: 1200px; margin: auto; }
+        .location-content h2 { font-size: 3rem; font-weight: 300; margin-bottom: 20px; text-transform: uppercase; }
+        .location-content p { font-size: 1.1rem; line-height: 1.8; max-width: 600px; color: #e0e0e0; margin-bottom: 15px; }
+
+        /* --- PHẦN MỚI 2: TRÍCH DẪN CẢM HỨNG (Ảnh 385) --- */
+        .quote-section { display: flex; background-color: #121212; }
+        .quote-image { flex: 6; min-height: 500px; background-image: url('thap-bieutuong.jfif'); background-size: cover; background-position: center; }
+        .quote-box { flex: 4; background-color: #4a252f; /* Màu đỏ đô sang trọng */ padding: 80px 60px; display: flex; align-items: center; justify-content: center; }
+        .quote-text { font-size: 1.2rem; line-height: 1.8; font-style: italic; color: #ecdfb5; position: relative; }
+        .quote-text::before { content: "“"; font-size: 5rem; color: rgba(255,255,255,0.1); position: absolute; top: -40px; left: -20px; font-family: serif; }
+
+        /* --- PHẦN MỚI 3: THỐNG KÊ CHI TIẾT (Ảnh 387) --- */
+        .stats-section { background-color: #e6d8c8; /* Màu nền be/kem */ padding: 100px 20px; color: #333333; text-align: center; }
+        .stats-header { max-width: 800px; margin: 0 auto 60px auto; }
+        .stats-header h2 { font-size: 2.2rem; font-weight: 500; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .stats-header p { font-size: 1.1rem; line-height: 1.6; color: #555; }
+        
+        .stats-grid { max-width: 1000px; margin: auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; row-gap: 60px; }
+        .stat-item h3 { font-size: 1.8rem; font-weight: 400; color: #222; margin-bottom: 5px; }
+        .stat-item p { font-size: 0.9rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- TẦNG 2 CŨ: KIẾN TRÚC --- */
+        .about-section { background-color: #6b5d53bb; padding: 100px 20px; }
+        .about-container { max-width: 1200px; margin: auto; display: flex; align-items: center; gap: 60px; }
+        .about-text { flex: 1; } .about-image { flex: 1; } 
+        .about-image img { width: 100%; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .section-title { color: #d4af37; font-size: 2.5rem; margin-bottom: 20px; font-weight: 300; text-transform: uppercase;}
+        .section-desc { font-size: 1.1rem; line-height: 1.8; color: #cccccc; margin-bottom: 30px; }
+        .feature-list { list-style-type: none; }
+        .feature-list li { font-size: 1.1rem; color: #ffffff; margin-bottom: 15px; padding-left: 20px; border-left: 3px solid #d4af37; }
+
+        /* --- [MỚI] TỔNG QUAN VỊ TRÍ --- */
+        .overview-section {
+            background-color: #0b0b0b; /* Màu nền đen đồng bộ */
+            padding: 0; 
+        }
+        
+        .overview-container {
+            position: relative; /* Đặt mỏ neo để giữ các dòng chữ lại bên trong ảnh */
+            width: 100%; /* Cho ảnh rộng ra một chút để thấy rõ chi tiết */
+            margin: 0;
+        }
+
+        .overview-container img {
+            width: 100%;
+            display: block;
+            /* Đã xóa border-radius: 4px; */
+            border: none; /* [MỚI] Loại bỏ bất kỳ đường viền nào */
+            outline: none; /* [MỚI] Loại bỏ đường viền khi được chọn */
+        }
+
+        .floating-text {
+            position: absolute; /* Giúp chữ trôi nổi tự do trên mặt ảnh */
+            color: #ffffff;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9); /* Đổ bóng đen đậm để chữ đọc được trên mọi nền ảnh sáng/tối */
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+
+        .floating-text h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* Chỉnh tọa độ từng khối chữ (Dùng % để khi thu phóng màn hình chữ vẫn ở đúng tỷ lệ) */
+        .text-1 { top: 10%; right: 20%; }
+        .text-2 { top: 30%; left: 30%; }
+        .text-3 { bottom: 37%; right: 15%; text-align: right; }
+        .text-4 { bottom: 22%; left: 55%; }
+        .text-1 h4 {
+            color: #1f1f1fdb;
+        }
+
+        .text-1 p {
+            color: #1f1f1fdb;
+        }
+
+        /* --- TẦNG 3 CŨ: TIỆN ÍCH --- */
+        .amenities-section { padding: 100px 20px; background-color: #292828d4; }
+        .amenities-container { max-width: 1200px; margin: auto; }
+        .amenities-header { text-align: center; margin-bottom: 60px; }
+        .amenities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .amenity-card { background-color: #1a1a1a; border-radius: 8px; overflow: hidden; transition: transform 0.3s ease; border-bottom: 3px solid #d4af37; }
+        .amenity-card:hover { transform: translateY(-10px); }
+        .amenity-image { width: 100%; height: 250px; object-fit: cover; }
+        .amenity-content { padding: 25px; }
+        .amenity-title { color: #ffffff; font-size: 1.5rem; margin-bottom: 10px; font-weight: 400; }
+        .amenity-desc { color: #a0a0a0; font-size: 0.95rem; line-height: 1.6; }
+
+        /* --- TẦNG 4 CŨ: LIÊN HỆ & FOOTER --- */
+        .contact-section { background-color: #3a3a3a; padding: 80px 20px; text-align: center; }
+        .contact-form { max-width: 600px; margin: 0 auto; background-color: #1a1a1a; padding: 40px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .form-input { width: 100%; padding: 15px; margin-bottom: 20px; background-color: #2a2a2a; border: 1px solid #333; color: white; font-size: 1rem; border-radius: 4px; outline: none; }
+        .form-input:focus { border-color: #d4af37; }
+        .submit-btn { width: 100%; padding: 15px; background-color: #d4af37; color: #0b0b0b; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: background-color 0.3s; }
+        .submit-btn:hover { background-color: #b5952f; }
+        footer { background-color: #3e2129; padding: 40px 20px; text-align: center; border-top: 1px solid #222; }
+        .footer-logo { color: #d4af37; font-size: 1.8rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; }
+        .footer-text { color: #888; font-size: 0.9rem; line-height: 1.8; }
+        .footer-text a { color: #d4af37; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <body>
+    <header class="navbar">
+        <div class="nav-logo">ARIA BAY</div>
+        <nav class="nav-links">
+            <a href="#trang-chu">TRANG CHỦ</a>
+            <a href="#gioi-thieu">GIỚI THIỆU</a>
+            <a href="#vi-tri">VỊ TRÍ</a>
+            <a href="san-pham.html">SẢN PHẨM</a>
+            <a href="#lien-he">LIÊN HỆ</a>
+        </nav>
+    </header>
+
+    <section class="splash-screen" id="trang-chu">
+        <div class="splash-bg" id="splashBg"></div>
+        
+        <div class="splash-content">
+            <div class="splash-logo">
+                <div class="logo-text">ARIA BAY</div>
+            </div>
+            <div class="scroll-icon">
+                <span class="music-note">𝄞</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero" id="gioi-thieu">
+        <p class="hero-subtitle">VỊ TRÍ ĐỘC TÔN</p>
+        <h1 class="hero-title">GIAI ĐIỆU TRÊN TẦNG KHÔNG</h1>
+        <p class="hero-desc">CHUẨN MỰC SỐNG MỚI</p>
+        <p class="hero-intro-text">Aria Bay – tòa tháp biểu tượng tại Marina Bayfront District được kiến tạo với thiết kế giật cấp độc đáo, nhìn từ xa như những phím đàn piano vươn cao trên nền trời. Kiến trúc khác biệt ấy biến mỗi tầng cao thành một phím nhạc, mỗi khung cửa thành một giai điệu, cùng hòa ca với biển trời di sản để tạo nên bản giao hưởng sống độc nhất vô nhị.</p>
+    </section>
+
+     <section class="quote-section">
+        <div class="quote-image"></div>
+        <div class="quote-box">
+            <p class="quote-text">Nếu Marina Bayfront District là sân khấu sống và giải trí mang chuẩn Front Row Life, thì tòa tháp biểu tượng ARIA BAY chính là "hàng ghế đầu" VVIP nhất – nơi tái hiện tinh thần Front Row View với tầm nhìn bao trọn Vịnh di sản, đồng thời thừa hưởng trọn vẹn hệ sinh thái của tổ hợp.</p>
+        </div>
+    </section>
+
+    <section class="location-section">
+        <div class="location-content">
+            <h2>VỊ TRÍ HÀNG GHẾ ĐẦU<br>VỊNH KỲ QUAN</h2>
+            <p>Aria Bay sở hữu vị trí điển hình của "hàng ghế đầu": một bước chạm cát, trước mặt là vịnh, bên cạnh là hồ, sau lưng là phố. Thiên nhiên và mặt nước bao bọc trọn vẹn.</p>
+            <p>Vịnh di sản như được thu gọn trong tầm mắt – tầm nhìn 360°, rộng mở và không bị che chắn. Trao cho chủ nhân đặc quyền mà không phải ai cũng có được.</p>
+        </div>
+    </section>
+
+
+    <section class="stats-section">
+        <div class="stats-header">
+            <h2>THÁP ĐÔI BIỂU TƯỢNG MANG ĐẾN ĐẶC QUYỀN SỐNG LIỀN KỀ VỊNH BIỂN</h2>
+            <p>Với vị trí "một bước chạm cát", cùng dấu ấn kiến trúc độc đáo nổi bật trên đường chân trời vịnh Hạ Long, Aria Bay bao gồm hai tòa tháp cao 40 tầng, là công trình biểu tượng của bán đảo 3 Halong Marina.</p>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>1.96 HECTA</h3>
+                <p>Quy mô dự án</p>
+            </div>
+            <div class="stat-item">
+                <h3>40 TẦNG NỔI - 2 TẦNG HẦM</h3>
+                <p>Quy mô tầng</p>
+            </div>
+            <div class="stat-item">
+                <h3>2314 CĂN HỘ</h3>
+                <p>Tổng số căn</p>
+            </div>
+            <div class="stat-item">
+                <h3>72 SHOP KHỐI ĐẾ</h3>
+                <p>Khu thương mại</p>
+            </div>
+            <div class="stat-item">
+                <h3>65% CĂN STUDIO</h3>
+                <p>Tỷ lệ căn hộ</p>
+            </div>
+            <div class="stat-item">
+                <h3>8 SKY VILLA</h3>
+                <p>Phiên bản giới hạn</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="about-container">
+            <div class="about-text">
+                <h2 class="section-title">THIẾT KẾ ĐỘC BẢN</h2>
+                <p class="section-desc">Lấy cảm hứng từ sự giao hòa giữa thiên nhiên và con người, dự án mang đến một không gian sống tinh tế. Không quá cầu kỳ, phô trương nhưng đủ để khẳng định vị thế của chủ nhân với thiết kế tối ưu hóa ánh sáng tự nhiên và luồng gió trời.</p>
+                <ul class="feature-list">
+                    <li>Tầm nhìn bao quát toàn cảnh thành phố</li>
+                    <li>Thiết kế mặt kính hộp Low-E cách nhiệt</li>
+                    <li>Không gian riêng tư tuyệt đối</li>
+                </ul>
+            </div>
+            <div class="about-image">
+                <img src="thietke-docban.jfif" alt="Kiến trúc dự án">
+            </div>
+        </div>
+    </section>
+    <section class="overview-section">
+        <div class="overview-container">
+            <img src="tamnhin-aria.jpg" alt="Tổng quan dự án">
+            
+            <div class="floating-text text-1">
+                <h4>Tầm nhìn Panorama</h4>
+                <p>đắt giá hướng ra Vịnh Hạ Long</p>
+            </div>
+            
+            <div class="floating-text text-2">
+                <h4>Trung tâm Marina Bayfront District</h4>
+                <p>Tâm điểm của trải nghiệm đẳng cấp và trọn vẹn</p>
+            </div>
+            
+            <div class="floating-text text-3">
+                <h4>Hồ cảnh quan & Cầu biểu tượng</h4>
+                <p>Nằm liền kề ngay bên hông</p>
+            </div>
+            
+            <div class="floating-text text-4">
+                <h4>Phố hiện đại</h4>
+                <p>Sầm uất ngay sau lưng dự án</p>
+            </div>
+        </div>
+    </section>
+
+   <section class="map-section" id="vi-tri">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3725.9708450020275!2d107.0077570778573!3d20.953685940553083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjDCsDU3JzEzLjMiTiAxMDfCsDAwJzQ1LjUiRQ!5e0!3m2!1svi!2s!4v1773666398514!5m2!1svi!2s" 
+            width="100%" 
+            height="700" 
+            style="border:0; filter: contrast(1.1) grayscale(0.1);" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </section>
+
+    <section class="amenities-section">
+        <div class="amenities-container">
+            <div class="amenities-header">
+                <p class="hero-subtitle">ĐẶC QUYỀN VƯỢT TRỘI</p>
+                <h2 class="section-title">HỆ SINH THÁI TIỆN ÍCH 5 SAO</h2>
+            </div>
+            <div class="amenities-grid">
+                <div class="amenity-card">
+                    <img src="ho-boi.jfif" alt="Hồ bơi vô cực" class="amenity-image">
+                    <div class="amenity-content">
+                        <h3 class="amenity-title">Hồ Bơi ROOFTOP Bốn Mùa</h3>
+                        <p class="amenity-desc">Trải nghiệm thư giãn sang trọng</p>
+                    </div>
+                </div>
+                <div class="amenity-card">
+                    <img src="phong-tap.jfif" alt="Phòng Gym" class="amenity-image">
+                    <div class="amenity-content">
+                        <h3 class="amenity-title">Elite Fitness Center</h3>
+                        <p class="amenity-desc">Phòng tập với trang thiết bị tối tân, cùng đội ngũ huấn luyện viên chuyên nghiệp sẵn sàng hỗ trợ.</p>
+                    </div>
+                </div>
+                <div class="amenity-card">
+                    <img src="amthuc-a-au.jfif" alt="Nhà hàng sang trọng" class="amenity-image">
+                    <div class="amenity-content">
+                        <h3 class="amenity-title">Nhà Hàng Ẩm Thực Á - Âu</h3>
+                        <p class="amenity-desc">Tinh hoa ẩm thực đa quốc gia được chế biến bởi các đầu bếp trứ danh ngay trong khuôn viên dự án.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="lien-he">
+        <div class="amenities-header">
+            <p class="hero-subtitle">LIÊN HỆ ĐỂ ĐƯỢC TƯ VẤN CHI TIẾT</p>
+            <h2 class="section-title">Nhập Thông Tin Liên Hệ</h2>
+        </div>
+        <form class="contact-form" action="https://formsubmit.co/nguyennam20001020@gmail.com" method="POST">
+            <input type="text" name="Họ_Tên" class="form-input" placeholder="Họ và tên của bạn *" minlength="2" required>
+            
+            <input type="tel" name="Số_Điện_Thoại" class="form-input" placeholder="Số điện thoại liên hệ *" pattern="(0)[0-9]{9}" title="Vui lòng nhập đúng 10 chữ số, bắt đầu bằng số 0" required>
+            
+            <input type="email" name="Email_Khách" class="form-input" placeholder="Email (Không bắt buộc)">
+            
+            <input type="text" name="_honey" style="display:none">
+            
+            <input type="hidden" name="_captcha" value="true">
+            
+            <input type="hidden" name="_subject" value="CÓ KHÁCH HÀNG MỚI ĐĂNG KÝ TƯ VẤN ARIA BAY!">
+            <button type="submit" class="submit-btn">Gửi đi</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-logo">ARIA BAY</div>
+        <p class="footer-text">
+            <strong>Địa chỉ:</strong> Bán đảo 3, Khu đô thị Vịnh biển Halong Marina, Quảng Ninh <br>
+            <strong>Hotline:</strong> 0782.145.432 | <strong>Email:</strong> nguyennam20001020@gmail.com <br>
+            <strong>Facebook:</strong> <a href="https://www.facebook.com/share/1HR28WSmP5/" target="_blank" style="color: #d4af37; text-decoration: none;">Nhấp vào đây để liên hệ qua Facebook</a> <br>
+            &copy; Một trang dự án được thiết kế bởi <a href="https://www.facebook.com/share/1HR28WSmP5/" target="_blank">Nguyễn Nam</a>.
+        </p>
+    </footer>
+<script>
+        window.addEventListener('scroll', function() {
+            var cuonChuot = window.scrollY;
+            var anhNen = document.getElementById('splashBg');
+            
+            // CÀI ĐẶT MỚI: Công thức di chuyển
+            // Số 0.3 quyết định tốc độ di chuyển của ảnh so với chuột.
+            // 0.3 nghĩa là ảnh di chuyển chậm hơn 3 lần so với nội dung chính.
+            // Dấu trừ (-) để di chuyển lên khi cuộn xuống.
+            var diChuyenY = -cuonChuot * 0.1; 
+            
+            anhNen.style.transform = 'translateY(' + diChuyenY + 'px)';
+        });
+    </script>
+</body>
+</html>

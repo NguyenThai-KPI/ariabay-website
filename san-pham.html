@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản Phẩm - Aria Bay</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CÀI ĐẶT CHUNG VÀ MENU (Giữ nguyên từ Trang chủ) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Be Vietnam Pro', sans-serif; 
+            background-color: #e6d8c8; /* Đổi màu nền toàn trang sang màu be theo ảnh tham khảo */
+            color: #333333; /* Chữ màu xám đậm cho dễ đọc trên nền sáng */
+        }
+
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; background-color: #e6d8c8; padding: 15px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .nav-logo { font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 500; color: #333333; letter-spacing: 2px; }
+        .nav-links { display: flex; gap: 35px; }
+        .nav-links a { text-decoration: none; color: #333333; font-family: 'Oswald', sans-serif; font-size: 1.1rem; font-weight: 500; text-transform: uppercase; transition: color 0.3s; }
+        .nav-links a:hover { color: #8c6d23; }
+        
+        footer { background-color: #3e2129; padding: 40px 20px; text-align: center; border-top: 1px solid rgba(0,0,0,0.1); margin-top: 100px; color: #ffffff;}
+        .footer-logo { color: #d4af37; font-size: 1.8rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; }
+        .footer-text { color: #cccccc; font-size: 0.9rem; line-height: 1.8; }
+        .footer-text a { color: #d4af37; text-decoration: none; }
+                .splash-screen {
+            position: relative;
+            height: 100vh;
+            overflow: hidden; /* Cắt bỏ phần ảnh bị phình ra khi phóng to */
+        }
+
+        .splash-bg {
+            position: absolute;
+            /* CÀI ĐẶT MỚI: Làm ảnh cao hơn màn hình và đặt hơi nhô lên trên một chút */
+            top: -15vh;
+            left: 0;
+            width: 100%;
+            height: 130vh; /* Cao hơn màn hình 20% (để có "room" di chuyển lên mà không hở đáy) */
+            
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('halong-aria.webp'); 
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            /* XÓA transition cũ để JS điều khiển trực tiếp mượt mà hơn */
+        }
+
+        .splash-content {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1; /* Nổi chữ lên trên ảnh */
+        }
+
+        .splash-logo { text-align: center; }
+        .logo-text {
+            font-family: 'Oswald', sans-serif; font-size: 4rem; color: #ffffff;
+            letter-spacing: 6px; font-weight: 500; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .scroll-icon {
+            position: absolute; bottom: 40px; color: #ffffff; font-size: 3rem;
+            animation: bounce 2s infinite; text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+
+        .splash-logo { text-align: center; }
+
+        .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 4rem; /* Chữ logo to rõ */
+            color: #ffffff;
+            letter-spacing: 6px;
+            font-weight: 500;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5); /* Đổ bóng nhẹ để nổi bật trên nền ảnh */
+        }
+
+        /* Biểu tượng cuộn xuống */
+        .scroll-icon {
+            position: absolute;
+            bottom: 40px; /* Cách đáy 40px */
+            color: #ffffff;
+            font-size: 3rem;
+            animation: bounce 2s infinite; /* Hiệu ứng nhấp nhô liên tục */
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* Tạo hiệu ứng nhấp nhô cho nốt nhạc */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+        /* --- [MỚI] THÔNG TIN TỔNG QUAN DỰ ÁN --- */
+        .project-overview {
+            background-color: #b4bcc8; /* Màu nền xanh xám nhạt y như ảnh tham khảo */
+            padding: 80px 20px;
+            color: #333333;
+        }
+
+        .overview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 50px;
+            align-items: stretch; /* Kéo ảnh và chữ cao bằng nhau */
+        }
+
+        .overview-image { flex: 5; }
+        .overview-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .overview-details { flex: 7; display: flex; flex-direction: column; justify-content: center; }
+        .overview-details h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            color: #3e2129; /* Đỏ đô */
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Chia làm 2 cột bằng nhau */
+            gap: 20px 40px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box span { display: block; font-size: 0.85rem; color: #555; margin-bottom: 5px; }
+        .stat-box strong { display: block; font-size: 1rem; color: #222; font-weight: 500; line-height: 1.5; }
+        .stat-box.full-width { grid-column: span 2; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 20px; }
+
+        .overview-bottom {
+            max-width: 1200px;
+            margin: 50px auto 0 auto;
+            display: flex;
+            gap: 50px;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .bottom-col { flex: 1; }
+        .bottom-col h4 { color: #222; font-weight: 500; margin-bottom: 15px; font-size: 1.05rem; }
+        .bottom-col ul { list-style-type: none; margin-bottom: 15px; }
+        .bottom-col ul li { position: relative; padding-left: 15px; margin-bottom: 8px; }
+        .bottom-col ul li::before { content: "•"; position: absolute; left: 0; color: #3e2129; }
+        
+        .amenities-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+
+        /* --- [MỚI] MẶT BẰNG TẦNG ĐIỂM HÌNH --- */
+        .floorplan-section {
+            background-color: #f7f3ed; /* Màu nền be nhạt hơn một chút để phân biệt */
+            padding: 80px 20px;
+            color: #333333;
+        }
+
+        .floorplan-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .floorplan-container h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            color: #3e2129; /* Đỏ đô */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .floorplan-container .product-intro {
+            color: #555;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Thanh Menu Bấm chọn tòa (Tower Tabs) */
+        .tower-menu {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .tower-button {
+            background-color: #fff;
+            border: 1px solid #d4c4b4;
+            color: #777;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-size: 1.1rem;
+            padding: 12px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px; /* Bo góc nhẹ cho nút */
+        }
+
+        /* Hiệu ứng khi một nút tòa được chọn */
+        .tower-button.active {
+            background-color: #3e2129; /* Màu đỏ đô nổi bật */
+            color: #ffffff;
+            font-weight: 500;
+            border-color: #3e2129;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .tower-button:hover:not(.active) {
+            background-color: #f0eae1;
+            color: #3e2129;
+            border-color: #3e2129;
+        }
+
+        /* Vùng hiển thị ảnh Mặt bằng */
+        .floorplan-content {
+            position: relative;
+            animation: fadeIn 0.5s ease; /* Hiệu ứng mờ dần khi chuyển ảnh */
+        }
+
+        .floorplan-content img {
+            max-width: 100%;
+            height: auto;
+            display: none; /* Ẩn ảnh đi mặc định, JS sẽ hiện cái cần thiết */
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Class để hiện ảnh của tòa được chọn */
+        .floorplan-content img.active {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* --- [MỚI] BỐ CỤC 2 CỘT CHO TÒA MI & SOL --- */
+        .tower-display-wrapper {
+            display: flex;
+            align-items: center; /* Căn giữa ảnh và chữ theo chiều dọc */
+            gap: 50px; /* Khoảng cách không gian giữa ảnh và chữ */
+            margin-top: 30px;
+        }
+
+        .tower-image-col {
+            flex: 6; /* Cột ảnh chiếm 6 phần */
+        }
+
+        .tower-text-col {
+            flex: 4; /* Cột chữ chiếm 4 phần */
+            text-align: left; /* Ép chữ căn lề trái để đọc dễ hơn */
+        }
+
+        .tower-text-col .product-intro {
+            margin: 0; /* Xóa khoảng trống thừa */
+            padding: 0;
+            font-size: 1.15rem; /* Cho chữ to lên một chút */
+            line-height: 1.8;
+            color: #444;
+            text-align: justify; /* Căn đều 2 bên mép cho khối chữ vuông vức, sang trọng */
+        }
+
+        /* --- [MỚI] KHU VỰC SẢN PHẨM --- */
+        .product-section {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .product-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 40px;
+            padding: 0 50px;
+        }
+
+        /* Thanh Menu Bấm (Tabs) */
+        .tab-menu {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 50px;
+            border-bottom: 1px solid #d4c4b4; /* Đường kẻ mờ làm bệ đỡ cho menu */
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-size: 1rem;
+            color: #777;
+            padding: 10px 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Hiệu ứng khi một nút đang được chọn (Active) */
+        .tab-button.active {
+            color: #3e2129; /* Màu đỏ đô sang trọng */
+            font-weight: 500;
+            border-bottom: 2px solid #3e2129; /* Vạch gạch chân báo hiệu đang chọn */
+        }
+
+        .tab-button:hover { color: #3e2129; }
+
+        /* Nội dung bên trong từng Tab */
+        .tab-content {
+            display: none; /* Ẩn toàn bộ nội dung đi, JS sẽ quyết định hiện cái nào */
+            animation: fadeIn 0.5s ease; /* Hiệu ứng mờ dần khi chuyển tab */
+        }
+
+        /* Class để hiện tab được chọn */
+        .tab-content.active {
+            display: flex; /* Dùng Flexbox chia màn hình làm 2 nửa: Trái ảnh, Phải chữ */
+            align-items: center;
+            gap: 50px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-image { flex: 6; } /* Ảnh chiếm 60% */
+        .tab-image img { width: 100%; border-radius: 4px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+        .tab-info { flex: 4; } /* Thông số chiếm 40% */
+        .tab-info h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between; /* Đẩy tên thông số sang trái, giá trị sang phải */
+            margin-bottom: 15px;
+            border-bottom: 1px solid #d4c4b4;
+            padding-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .info-row span { color: #666; }
+        .info-row strong { color: #222; font-weight: 500; }
+        
+        .tab-detail {
+            text-align: center; /* Căn thẳng vào chính giữa màn hình */
+            margin-top: 60px; /* Đẩy cách xa phần thông số căn hộ phía trên ra một chút */
+            padding-top: 20px;
+            border-top: 1px solid #d4c4b4; /* Tạo một đường kẻ ngang mỏng nhẹ để ngăn cách */
+            font-family: 'Be Vietnam Pro', sans-serif; /* Dùng font chữ thanh mảnh */
+            line-height: 1.8;
+        }
+        
+         .tab-detail em {
+            font-size: 0.95rem;
+         color: #777777; /* Màu xám nhạt cho dòng ghi chú */
+         }
+        
+         .tab-detail strong{
+            font-size: 1.0rem;
+            color: #3e2129; /* Nhấn mạnh câu kêu gọi liên hệ bằng màu Đỏ đô của dự án */
+            font-weight: 500;
+            display: block; /* Đảm bảo câu này luôn tự động xuống dòng */
+            margin-top: 5px;
+         }
+
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-logo">ARIA BAY</div>
+        <nav class="nav-links">
+            <a href="index.html">TRANG CHỦ</a>
+            <a href="index.html#gioi-thieu">GIỚI THIỆU</a>
+            <a href="index.html#vi-tri">VỊ TRÍ</a>
+            <a href="#">SẢN PHẨM</a>
+            <a href="index.html#lien-he">LIÊN HỆ</a>
+        </nav>
+    </header>
+
+    <section class="splash-screen" id="trang-chu">
+        <div class="splash-bg" id="splashBg"></div>
+        
+        <div class="splash-content">
+            <div class="splash-logo">
+                <div class="logo-text">ARIA BAY</div>
+            </div>
+            <div class="scroll-icon">
+                <span class="music-note">𝄞</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-overview">
+        <div class="overview-container">
+            <div class="overview-image">
+                <img src="thong-tin-tower.jpg" alt="Aria Bay Mi and Sol Towers">
+            </div>
+            
+            <div class="overview-details">
+                <h2>THÔNG TIN DỰ ÁN</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-box"><span>Tổng diện tích</span><strong>19.611,99 m²</strong></div>
+                    <div class="stat-box"><span>Diện tích xây dựng</span><strong>9.883,35 m²</strong></div>
+                    <div class="stat-box"><span>Mật độ xây dựng</span><strong>50%</strong></div>
+                    <div class="stat-box"><span>Pháp lý</span><strong>Đất Thương mại dịch vụ có thời hạn sử dụng đất lâu dài</strong></div>
+                    <div class="stat-box"><span>Số tầng</span><strong>40 tầng nổi, 2 tầng hầm</strong></div>
+                    <div class="stat-box"><span>Vị trí</span><strong>Thuộc tổ hợp Marina Bayfront District, sát bờ biển bán đảo 3, Khu đô thị Halong Marina</strong></div>
+                </div>
+                
+                <div class="stat-box full-width">
+                    <span>Quy mô</span>
+                    <strong>2 tòa tháp Sol (S) và Mi (M)</strong>
+                    <strong>2.314 căn hộ (tầng 5 - 39)</strong>
+                    <span>1.496 căn studio, 486 căn 1PN, 204 căn 2PN, 120 căn 3PN, 8 căn Sky Villa</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="overview-bottom">
+            <div class="bottom-col">
+                <h4>72 shop khối đế, 5 retail pods</h4>
+                <ul>
+                    <li>Pod 1 - F&B & Café Promenade: Đại lộ ẩm thực mang âm hưởng quốc tế.</li>
+                    <li>Pod 2 - Wellness & Spa Retreat: Không gian chăm sóc sức khỏe sắc đẹp.</li>
+                    <li>Pod 3 - Lifestyle & Shopping: Cửa hàng thời trang, concept store.</li>
+                    <li>Pod 4 - Entertainment & Kids Club: Khu vui chơi trẻ em, rạp chiếu phim mini.</li>
+                    <li>Pod 5 - Daily Essentials & Services: Siêu thị mini, dịch vụ tiện ích hàng ngày.</li>
+                </ul>
+            </div>
+            <div class="bottom-col">
+                <h4>Tiện ích nội khu</h4>
+                <p>Tầng tiện ích 1, 2, 3, 4, 20, 40 bao gồm:</p>
+                <div class="amenities-grid">
+                    <ul>
+                        <li>Hồ bơi vô cực rooftop</li>
+                        <li>Rooftop bar</li>
+                        <li>Nhà hàng / Public lounge</li>
+                        <li>Sàn ngắm cảnh</li>
+                        <li>Tiện ích giặt xấy tự phục vụ</li>
+                        <li>Khu vui chơi trẻ em</li>
+                    </ul>
+                    <ul>
+                        <li>Hồ bơi bốn mùa rooftop</li>
+                        <li>Khu vực nướng BBQ</li>
+                        <li>Khu vực gym / Elite Fitness</li>
+                        <li>Sàn tắm nắng</li>
+                        <li>Khu chiếu phim ngoài trời</li>
+                        <li>Co-working space & thư viện</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="floorplan-section">
+        <div class="floorplan-container">
+            
+            <div class="tower-menu">
+                <button class="tower-button active" onclick="openTower(event, 'MiMap')">MI TOWER</button>
+                <button class="tower-button" onclick="openTower(event, 'SolMap')">SOL TOWER</button>
+            </div>
+            
+            <div class="tower-display-wrapper">
+                
+                <div class="tower-image-col">
+                    <div class="floorplan-content">
+                        <img src="toa-M-Aria.jpg" alt="MI TOWER" id="MiMap" class="active">
+                        <img src="toa-S-Aria.jpg" alt="SOL TOWER" id="SolMap">
+                    </div>
+                </div>
+                
+                <div class="tower-text-col">
+                    <p class="product-intro" id="intro-MiMap">
+                        Tòa M vị trí ngay cạnh Soul Boutique Hotel, sở hữu các căn Sky Villa có bể bơi vô cực hướng ra vịnh biển. Mang trong mình sự lắng đọng và tinh tế, M là nốt E - thường kết hợp cùng Sol tạo nên hợp âm hài hòa, giống như khúc nhạc buổi hoàng hôn trên vịnh, dành cho những khoảnh khắc riêng tư và sâu lắng.
+                    </p>
+                    <p class="product-intro" id="intro-SolMap" style="display: none;">
+                        Tòa S tọa lạc ngay sát vịnh biển, đại diện cho ánh sáng và sự rực rỡ. Trong nhạc lý, Sol là nốt G – thanh âm tinh khôi, mạnh mẽ, như ánh mặt trời buổi bình minh chiếu rọi trên vịnh biển. Sol Tower gợi nhắc về một cuộc sống tràn đầy năng lượng, hướng ngoại, sôi động và gắn kết.
+                    </p>
+                </div>
+                
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="product-section">
+        
+        <div class="tab-menu">
+            <button class="tab-button active" onclick="openTab(event, 'Studio')">Studio</button>
+            <button class="tab-button" onclick="openTab(event, 'Studio+')">Studio+</button>
+            <button class="tab-button" onclick="openTab(event, '1PN')">1 Phòng Ngủ</button>
+            <button class="tab-button" onclick="openTab(event, '+1PN')">1 Phòng Ngủ+1</button>
+            <button class="tab-button" onclick="openTab(event, '2PN')">2 Phòng Ngủ</button>
+            <button class="tab-button" onclick="openTab(event, '3PN')">3 Phòng Ngủ</button>
+            <button class="tab-button" onclick="openTab(event, 'Sky Villa')">Sky Villa</button>
+        </div>
+
+        <div id="Studio" class="tab-content active">
+            <div class="tab-image">
+                <img src="can-ho-studio.jpeg" alt="Căn Studio">
+            </div>
+            <div class="tab-info">
+                <h3>Studio</h3>
+                <div class="info-row"><span>Số căn:</span> <strong>391 căn</strong></div>
+                <div class="info-row"><span>DT Thông Thủy:</span> <strong>29.7 - 34.4 m²</strong></div>
+            </div>
+        </div>
+
+        <div id="Studio+" class="tab-content">
+            <div class="tab-image">
+                <img src="can-ho-studio.jpeg" alt="Căn Studio">
+            </div>
+            <div class="tab-info">
+                <h3>Studio+</h3>
+                <div class="info-row"><span>Số căn:</span> <strong>340 căn</strong></div>
+                <div class="info-row"><span>DT Thông Thủy:</span> <strong>35.1 – 36.1 m²</strong></div>
+            </div>
+        </div>
+
+        <div id="1PN" class="tab-content">
+            <div class="tab-image">
+                <img src="can-ho-1phong.jpeg" alt="Căn 1 Phòng Ngủ">
+            </div>
+            <div class="tab-info">
+                <h3>Căn 1 Phòng Ngủ</h3>
+                <div class="info-row"><span>Số căn:</span> <strong>141 căn</strong></div>
+                <div class="info-row"><span>DT Thông Thủy:</span> <strong>49.3 – 52.3 m²</strong></div>
+            </div>
+        </div>
+
+         <div id="+1PN" class="tab-content">
+            <div class="tab-image">
+                <img src="can-ho-1phong.jpeg" alt="Căn Studio">
+            </div>
+            <div class="tab-info">
+                <h3>Căn 1 Phòng Ngủ+1</h3>
+                <div class="info-row"><span>Số căn:</span> <strong>34 căn</strong></div>
+                <div class="info-row"><span>DT Thông Thủy:</span> <strong>61.2 – 63 m²</strong></div>
+            </div>
+        </div>
+
+        <div id="2PN" class="tab-content">
+            <div class="tab-image">
+                <img src="can-ho-2phong.jpeg" alt="Căn 2 Phòng Ngủ">
+            </div>
+            <div class="tab-info">
+                <h3>Căn 2 Phòng Ngủ</h3>
+                <div class="info-row"><span>Số căn:</span> <strong>170 căn</strong></div>
+                <div class="info-row"><span>DT Thông Thủy:</span> <strong>71.8 - 85.7 m²</strong></div>
+            </div>
+        </div>
+
+         <div id="3PN" class="tab-content">
+            <div class="tab-image">
+                <img src="can-ho-3phong.jpg" alt="Căn Studio">
+            </div>
+            <div class="tab-info">
+                <h3>Căn 3 Phòng Ngủ</h3>
+                <div class="info-row"><span>Số căn:</span> <strong>60 căn</strong></div>
+                <div class="info-row"><span>DT Thông Thủy:</span> <strong>117.4 – 118.1 m²</strong></div>
+            </div>
+        </div>
+
+        <div id="Sky Villa" class="tab-content">
+            <div class="tab-image">
+                <img src="vitri-ngoi.jfif" alt="Căn Studio">
+            </div>
+            <div class="tab-info">
+                <h3>Sky Villa</h3>
+                <div class="info-row"><span>Số căn:</span> <strong>4 căn</strong></div>
+                <div class="info-row"><span>DT Thông Thủy:</span> <strong>319.1 – 321.2 m²</strong></div>
+            </div>
+        </div>
+
+        <div class="tab-detail">
+            <p><em>* Những bức ảnh trên chỉ mang tính chất minh họa.</em></p>
+            <p></p><strong>Vui lòng liên hệ với chúng tôi để nhận layout và thông tin chi tiết nhất.</strong></p>
+        </div>
+
+    </section>
+
+   <footer>
+        <div class="footer-logo">ARIA BAY</div>
+        <p class="footer-text">
+            <strong>Địa chỉ:</strong> Bán đảo 3, Khu đô thị Vịnh biển Halong Marina, Quảng Ninh <br>
+            <strong>Hotline:</strong> 0782.145.432 | <strong>Email:</strong> nguyennam20001020@gmail.com <br>
+            <strong>Facebook:</strong> <a href="https://www.facebook.com/share/1HR28WSmP5/" target="_blank" style="color: #d4af37; text-decoration: none;">Nhấp vào đây để liên hệ qua Facebook</a> <br>
+            &copy; Một trang dự án được thiết kế bởi <a href="https://www.facebook.com/share/1HR28WSmP5/" target="_blank">Nguyễn Nam</a>.
+        </p>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            // Bước 1: Ẩn tất cả các nội dung tab đi
+            var tabContents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+
+            // Bước 2: Tắt hiệu ứng 'đang chọn' của tất cả các nút
+            var tabButtons = document.getElementsByClassName("tab-button");
+            for (var i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+
+            // Bước 3: Hiện nội dung tab được bấm và kích hoạt màu cho nút đó
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        window.addEventListener('scroll', function() {
+            var cuonChuot = window.scrollY;
+            var anhNen = document.getElementById('splashBg');
+            var diChuyenY = -cuonChuot * 0.1; 
+            
+            anhNen.style.transform = 'translateY(' + diChuyenY + 'px)';
+        });
+    </script>
+    <script>
+        function openTower(evt, towerName) {
+            // Bước 1: Ẩn tất cả các ảnh mặt bằng đi
+            var floorplanImages = document.querySelectorAll(".floorplan-content img");
+            for (var i = 0; i < floorplanImages.length; i++) {
+                floorplanImages[i].classList.remove("active");
+            }
+
+            // Bước 2: Tắt hiệu ứng 'đang chọn' của tất cả các nút tòa
+            var towerButtons = document.getElementsByClassName("tower-button");
+            for (var i = 0; i < towerButtons.length; i++) {
+                towerButtons[i].classList.remove("active");
+            }
+
+            // Bước 3: Hiện ảnh mặt bằng của tòa được bấm và kích hoạt màu cho nút đó
+            document.getElementById(towerName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+
+            // [MỚI] Bước 4: Đổi đoạn văn bản giới thiệu tương ứng
+            // Đầu tiên, ẩn cả 2 đoạn văn đi
+            document.getElementById("intro-MiMap").style.display = "none";
+            document.getElementById("intro-SolMap").style.display = "none";
+            
+            // Sau đó, chỉ hiện đoạn văn có đuôi tên trùng với Tòa đang được chọn
+            document.getElementById("intro-" + towerName).style.display = "block";
+        }
+        
+        // (Giữ nguyên hàm openTab của phần chọn loại phòng ở bên dưới nếu có)
+        // ...
+    </script>
+</body>
+</html>
