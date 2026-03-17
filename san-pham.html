@@ -385,6 +385,41 @@
             display: block; /* Đảm bảo câu này luôn tự động xuống dòng */
             margin-top: 5px;
          }
+         /* =========================================
+           THIẾT KẾ THÍCH ỨNG CHO ĐIỆN THOẠI (RESPONSIVE)
+           ========================================= */
+        @media screen and (max-width: 768px) {
+            /* 1. Sửa Thanh Menu: Xếp dọc lại cho vừa màn hình */
+            .navbar { padding: 15px 20px; flex-direction: column; gap: 15px; }
+            .nav-links { gap: 15px; flex-wrap: wrap; justify-content: center; font-size: 0.9rem; }
+            body { padding-top: 120px; } /* Đẩy nội dung xuống sâu hơn vì menu dọc chiếm nhiều chỗ */
+
+            /* 2. Ép các bố cục 2 cột (Trái/Phải) biến thành Xếp Dọc (Trên/Dưới) */
+            .tab-content.active,
+            .tower-display-wrapper,
+            .overview-container,
+            .overview-bottom {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            /* 3. Cho ảnh và chữ phóng to chiếm trọn 100% chiều ngang điện thoại */
+            .tower-image-col, .tab-image, .overview-image { width: 100%; flex: auto; }
+            .tower-text-col, .tab-info, .overview-details { width: 100%; flex: auto; padding: 0 10px; }
+
+            /* 4. Sửa các bảng thống kê từ 2 cột nhập lại thành 1 cột */
+            .stats-grid, .amenities-grid { grid-template-columns: 1fr; gap: 15px; }
+            .stat-box.full-width { grid-column: span 1; }
+
+            /* 5. Thu nhỏ chữ Tiêu đề và Nút bấm cho thanh thoát */
+            .overview-details h2, .floorplan-container h2 { font-size: 2rem; text-align: center; }
+            .tab-menu, .tower-menu { flex-wrap: wrap; gap: 10px; }
+            .tab-button, .tower-button { padding: 8px 15px; font-size: 0.95rem; }
+            
+            /* 6. Thu hẹp khoảng trống 2 bên mép màn hình */
+            .product-section, .project-overview, .floorplan-section { padding: 40px 10px; }
+            .product-intro { padding: 0 10px; }
+        }
 
     </style>
 </head>
