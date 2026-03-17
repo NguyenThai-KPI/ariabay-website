@@ -436,6 +436,14 @@
             }
             
             body { padding-top: 60px; } /* Trả lại khoảng cách chuẩn cho thân trang */
+            /* --- [QUAN TRỌNG] Bẻ gãy bố cục 2 cột ngang thành hàng dọc --- */
+            .tab-content.active,
+            .tower-display-wrapper,
+            .overview-container,
+            .overview-bottom {
+                flex-direction: column !important; /* Ép buộc xếp dọc */
+                gap: 20px;
+            }
 
             /* 3. Cho ảnh và chữ phóng to chiếm trọn 100% chiều ngang điện thoại */
             .tower-image-col, .tab-image, .overview-image { width: 100%; flex: auto; }
@@ -671,7 +679,7 @@
 
         <div class="tab-detail">
             <p><em>* Những bức ảnh trên chỉ mang tính chất minh họa.</em></p>
-            <p></p><strong>Vui lòng liên hệ với chúng tôi để nhận layout và thông tin chi tiết nhất.</strong></p>
+            <p><strong>Vui lòng liên hệ với chúng tôi để nhận layout và thông tin chi tiết nhất.</strong></p>
         </div>
 
     </section>
