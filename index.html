@@ -351,6 +351,61 @@
             /* 6. Thu hẹp khoảng trống 2 bên mép màn hình */
             .product-section, .project-overview, .floorplan-section { padding: 40px 10px; }
             .product-intro { padding: 0 10px; }
+
+            /* --- 1. SỬA LỖI KHỐI QUOTE (Hàng ghế đầu) --- */
+        .quote-section {
+            flex-direction: column; /* Ép ảnh và chữ xếp thành hàng dọc */
+        }
+        .quote-image {
+            width: 100% !important; /* Ảnh bung full 100% màn hình */
+            height: 250px; /* Thiết lập chiều cao vừa phải để không bị kéo giãn */
+        }
+        .quote-box {
+            width: 100% !important; /* Khối chữ màu đỏ bung full 100% màn hình */
+            padding: 40px 20px; /* Căn lề lại cho thoáng đãng */
+        }
+        .quote-text {
+            font-size: 1.05rem; /* Điều chỉnh lại cỡ chữ */
+            text-align: justify; /* Căn đều 2 mép cho vuông vức, sang trọng */
+            line-height: 1.6;
+        }
+
+        /* --- 2. SỬA LỖI OVERVIEW (Chữ đè lên ảnh) --- */
+        .overview-container {
+            display: flex;
+            flex-direction: column; /* Ảnh ở trên, chữ xếp dọc ở dưới */
+            background-color: #121212; /* Nền đen đồng bộ */
+            padding-bottom: 20px;
+        }
+        .overview-container img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        /* Gỡ bỏ tính năng "Trôi nổi" (Absolute) của chữ trên điện thoại */
+        .floating-text {
+            position: relative !important; 
+            top: auto !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: auto !important;
+            transform: none !important;
+            width: 100%;
+            padding: 15px 20px;
+            background: none;
+            border-left: 4px solid #d4af37; /* Thêm vạch màu vàng bên trái để trang trí */
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .floating-text h4 {
+            font-size: 1.1rem;
+            color: #d4af37;
+            margin-bottom: 5px;
+        }
+        .floating-text p {
+            font-size: 0.95rem;
+            color: #ccc;
+        }
         }
     </style>
 </head>
