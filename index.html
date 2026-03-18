@@ -17,6 +17,7 @@
     
     <style>
         
+        
         /* --- TẦNG 0: CÀI ĐẶT CHUNG --- */
         /* Lùi vị trí cuộn xuống 80px để không bị thanh menu che mất tiêu đề */
         section[id] {
@@ -84,6 +85,7 @@
         .nav-logo-image:hover {
             transform: scale(1.05); /* Phóng to nhẹ khi di chuột vào */
         }
+        
 
         /* --- [MỚI] TỐI ƯU LOGO TRÊN ĐIỆN THOẠI --- */
         @media screen and (max-width: 768px) {
@@ -126,6 +128,22 @@
             display: flex; 
             align-items: center;
         }
+        /* Hiện và trang điểm cho nút Zalo nhỏ trên thanh menu điện thoại */
+            .mobile-zalo-btn {
+                display: block;
+                background-color: #0068ff; /* Màu xanh Zalo */
+                color: #ffffff !important;
+                text-decoration: none;
+                padding: 6px 14px;
+                border-radius: 20px; /* Bo góc tròn xoe */
+                font-family: 'Be Vietnam Pro', sans-serif;
+                font-size: 0.85rem;
+                font-weight: 500;
+                margin-left: auto; /* Đẩy nút này sát về bên phải */
+                margin-right: 15px; /* Cách nút 3 gạch một khoảng nhỏ */
+                box-shadow: 0 2px 8px rgba(0, 104, 255, 0.4);
+                letter-spacing: 0.5px;
+            }
 
         .nav-links a.zalo-menu-btn:hover {
             background-color: #0054cc; /* Đậm màu hơn khi khách đưa chuột vào */
@@ -371,6 +389,9 @@
             cursor: pointer;
             color: #333333;
         }
+        .mobile-zalo-btn {
+            display: none;
+        }
 
         /* =========================================
            THIẾT KẾ THÍCH ỨNG CHO ĐIỆN THOẠI (RESPONSIVE)
@@ -422,6 +443,47 @@
                 margin-top: 10px; /* Cách các menu khác một chút xíu */
                 font-weight: bold;
                 letter-spacing: 1px;
+            }
+            /* --- SỬA LỖI ẢNH BÌA TRANG CHỦ BỊ ZOOM QUÁ TO TRÊN ĐIỆN THOẠI --- */
+            .splash-screen {
+                height: 90vh; /* Thu ngắn màn hình chào một chút để vừa vặn hơn */
+            }
+            
+            .splash-bg {
+                height: 100vh !important; /* Giảm mạnh độ cao của ảnh nền để trình duyệt không bị ép zoom lên nữa */
+                top: 0 !important; /* Đặt ảnh về lại vị trí chuẩn */
+                background-position: center !important; /* Ép tâm ảnh vào chính giữa */
+            }
+
+            .logo-text {
+                font-size: 3rem !important; /* Thu nhỏ chữ ARIA BAY lại một chút để không che mất cảnh đẹp */
+            }
+            /* --- [MỚI] TỐI ƯU KHU VỰC "GIAI ĐIỆU TRÊN TẦNG KHÔNG" TRÊN ĐIỆN THOẠI --- */
+            .hero {
+                /* Đổi height thành min-height để trên các điện thoại màn hình ngắn, chữ không bị trôi ra ngoài ảnh */
+                height: auto; 
+                min-height: 100vh; 
+                padding: 120px 20px 60px 20px; /* Tạo khoảng trống ở trên để không bị thanh menu đè vào */
+            }
+
+            .hero-title {
+                font-size: 2.2rem !important; /* Thu nhỏ tiêu đề chính cho vừa vặn màn hình */
+                line-height: 1.3;
+                margin-bottom: 10px;
+                letter-spacing: 1px !important; /* Giảm độ giãn chữ */
+            }
+
+            .hero-subtitle, .hero-desc {
+                font-size: 0.85rem !important;
+                letter-spacing: 3px !important; /* Giảm độ giãn chữ để tránh bị rớt dòng lộn xộn */
+                margin-bottom: 20px;
+            }
+
+            .hero-intro-text {
+                font-size: 0.95rem !important;
+                line-height: 1.6;
+                text-align: justify; /* Căn đều 2 bên mép cho khối chữ vuông vắn, giống như đọc tạp chí */
+                padding: 0 10px; /* Ép chữ hẹp lại một chút xíu so với mép màn hình */
             }
             
             body { padding-top: 60px; } /* Trả lại khoảng cách chuẩn cho thân trang */
@@ -542,6 +604,8 @@
             <img src="logo-chinh.png" alt="Aria Bay Logo" class="nav-logo-image">
         </a>
         
+        <a href="https://zalo.me/0782145432" target="_blank" class="mobile-zalo-btn">Chat Zalo</a>
+        
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
         
         <nav class="nav-links" id="mobileMenu">
@@ -551,7 +615,6 @@
             <a href="tien-ich.html">TIỆN ÍCH</a>
             <a href="san-pham.html">SẢN PHẨM</a>
             <a href="index.html#lien-he">LIÊN HỆ</a>
-
             <a href="https://zalo.me/0782145432" target="_blank" class="zalo-menu-btn">NHẬN TƯ VẤN QUA ZALO</a>
         </nav>
     </header>

@@ -68,13 +68,33 @@
             align-items: center;
         }
 
+
         .nav-links a.zalo-menu-btn:hover {
             background-color: #0054cc; /* Đậm màu hơn khi khách đưa chuột vào */
             color: #ffffff;
             transform: translateY(-2px); /* Hiệu ứng nảy lên nhẹ */
         }
+
+         .mobile-zalo-btn {
+                display: block;
+                background-color: #0068ff; /* Màu xanh Zalo */
+                color: #ffffff !important;
+                text-decoration: none;
+                padding: 6px 14px;
+                border-radius: 20px; /* Bo góc tròn xoe */
+                font-family: 'Be Vietnam Pro', sans-serif;
+                font-size: 0.85rem;
+                font-weight: 500;
+                margin-left: auto; /* Đẩy nút này sát về bên phải */
+                margin-right: 15px; /* Cách nút 3 gạch một khoảng nhỏ */
+                box-shadow: 0 2px 8px rgba(0, 104, 255, 0.4);
+                letter-spacing: 0.5px;
+            }
         
         .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: #333333; }
+        .mobile-zalo-btn {
+            display: none;
+        }
 
         /* --- KHU VỰC TIỆN ÍCH (Sử dụng lại bố cục Tab của trang Sản phẩm) --- */
         .amenities-section {
@@ -302,6 +322,7 @@
         <a href="index.html" class="logo-wrapper">
             <img src="logo-chinh.png" alt="Aria Bay Logo" class="nav-logo-image">
         </a>
+        <a href="https://zalo.me/0782145432" target="_blank" class="mobile-zalo-btn">Chat Zalo</a>
 
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
         <nav class="nav-links" id="mobileMenu">

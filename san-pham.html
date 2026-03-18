@@ -65,13 +65,29 @@
             display: flex; 
             align-items: center;
         }
-
+       
         .nav-links a.zalo-menu-btn:hover {
             background-color: #0054cc; /* Đậm màu hơn khi khách đưa chuột vào */
             color: #ffffff;
             transform: translateY(-2px); /* Hiệu ứng nảy lên nhẹ */
         }
         
+         .mobile-zalo-btn {
+                display: block;
+                background-color: #0068ff; /* Màu xanh Zalo */
+                color: #ffffff !important;
+                text-decoration: none;
+                padding: 6px 14px;
+                border-radius: 20px; /* Bo góc tròn xoe */
+                font-family: 'Be Vietnam Pro', sans-serif;
+                font-size: 0.85rem;
+                font-weight: 500;
+                margin-left: auto; /* Đẩy nút này sát về bên phải */
+                margin-right: 15px; /* Cách nút 3 gạch một khoảng nhỏ */
+                box-shadow: 0 2px 8px rgba(0, 104, 255, 0.4);
+                letter-spacing: 0.5px;
+            }
+
         footer { background-color: #3e2129; padding: 40px 20px; text-align: center; border-top: 1px solid rgba(0,0,0,0.1); margin-top: 100px; color: #ffffff;}
         .footer-logo { color: #d4af37; font-size: 1.8rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; font-family: 'Oswald', sans-serif; }
         .footer-text { color: #cccccc; font-size: 0.9rem; line-height: 1.8; }
@@ -410,6 +426,9 @@
             cursor: pointer;
             color: #333333;
         }
+        .mobile-zalo-btn {
+            display: none;
+        }
          /* =========================================
            THIẾT KẾ THÍCH ỨNG CHO ĐIỆN THOẠI (RESPONSIVE)
            ========================================= */
@@ -499,6 +518,8 @@
             <img src="logo-chinh.png" alt="Aria Bay Logo" class="nav-logo-image">
         </a>
         
+        <a href="https://zalo.me/0782145432" target="_blank" class="mobile-zalo-btn">Chat Zalo</a>
+        
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
         
         <nav class="nav-links" id="mobileMenu">
@@ -508,7 +529,6 @@
             <a href="tien-ich.html">TIỆN ÍCH</a>
             <a href="san-pham.html">SẢN PHẨM</a>
             <a href="index.html#lien-he">LIÊN HỆ</a>
-
             <a href="https://zalo.me/0782145432" target="_blank" class="zalo-menu-btn">NHẬN TƯ VẤN QUA ZALO</a>
         </nav>
     </header>
