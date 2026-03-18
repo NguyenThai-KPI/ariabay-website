@@ -15,291 +15,101 @@
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     
-    <style>
-        
-        
+   <style>
         /* --- TẦNG 0: CÀI ĐẶT CHUNG --- */
-        /* Lùi vị trí cuộn xuống 80px để không bị thanh menu che mất tiêu đề */
-        section[id] {
-            scroll-margin-top: 50px; 
-        }
-
-/* --- [MỚI] BẢN ĐỒ VỊ TRÍ --- */
+        section[id] { scroll-margin-top: 50px; }
+        
         .map-section {
-            width: 100%;
-            background-color: #0b0b0b; /* Màu nền đen đồng bộ với trang web */
-            /* CÀI ĐẶT MỚI: Xóa khoảng trống (padding) để ảnh chạm sát mép trên/dưới */
-            padding: 0; 
-            display: flex;
-            justify-content: center;
+            width: 100%; background-color: #0b0b0b; padding: 0; display: flex; justify-content: center;
         }
-
         .map-image {
-            width: 100%;
-            /* CÀI ĐẶT MỚI: Xóa max-width, ép nó rộng đúng bằng 100% màn hình */
-            max-width: none; 
-            display: block;
-            margin: 0;
-            border: none; /* Đảm bảo không có viền nào */
-            outline: none;
+            width: 100%; max-width: none; display: block; margin: 0; border: none; outline: none;
         }
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: 'Be Vietnam Pro', sans-serif; /* Đổi sang font chữ thanh mảnh, hiện đại */
+            font-family: 'Be Vietnam Pro', sans-serif; 
             background-color: #0b0b0b; 
             color: #ffffff; 
         }
-        /* --- [MỚI] THANH ĐIỀU HƯỚNG (MENU NAV) --- */
+
+        /* --- THANH ĐIỀU HƯỚNG (MENU NAV) --- */
         .navbar {
-            position: fixed; /* Ghim chặt menu lên đầu trang */
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #e6d8c8; /* Màu nền be giống ảnh tham khảo */
-            padding: 0px 60px;
-            display: flex;
-            justify-content: space-between; /* Đẩy Logo sang trái, Menu sang phải */
-            align-items: center;
-            z-index: 1000; /* Trị số cực lớn để menu luôn nổi lên trên cùng mọi bức ảnh */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Tạo bóng đổ nhẹ xuống dưới */
+            position: fixed; top: 0; left: 0; width: 100%;
+            background-color: #e6d8c8; padding: 0px 60px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* --- CSS MỚI CHO LOGO ẢNH --- */
-        .logo-wrapper {
-            display: flex;
-            align-items: center;
-            text-decoration: none; /* Xóa gạch chân của link */
-        }
+        .logo-wrapper { display: flex; align-items: center; text-decoration: none; }
+        .nav-logo-image { height: 75px; width: auto; object-fit: contain; transition: transform 0.3s ease; }
+        .nav-logo-image:hover { transform: scale(1.05); }
 
-        .nav-logo-image {
-            /* Bạn có thể tăng giảm số 50px này để logo to/nhỏ tùy ý */
-            height: 75px; 
-            width: auto; /* Tự động tính chiều rộng để ảnh không bị méo */
-            object-fit: contain;
-            transition: transform 0.3s ease; /* Thêm hiệu ứng khi di chuột */
-        }
-
-        .nav-logo-image:hover {
-            transform: scale(1.05); /* Phóng to nhẹ khi di chuột vào */
-        }
-        
-
-        /* --- [MỚI] TỐI ƯU LOGO TRÊN ĐIỆN THOẠI --- */
-        @media screen and (max-width: 768px) {
-            .navbar {
-                padding: 10px 20px; /* Thu hẹp menu một chút */
-            }
-            .nav-logo-image {
-                height: 45px; /* Logo nhỏ hơn một chút trên điện thoại cho thanh thoát */
-            }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 35px; /* Khoảng cách giữa các chữ trong menu */
-            align-items: center;
-        }
-
+        .nav-links { display: flex; gap: 35px; align-items: center; }
         .nav-links a {
-            text-decoration: none;
-            color: #333333; /* Chữ màu xám đậm */
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 300;
-            text-transform: uppercase;
-            transition: color 0.3s;
+            text-decoration: none; color: #333333; font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem; font-weight: 300; text-transform: uppercase; transition: color 0.3s;
         }
+        .nav-links a:hover { color: #8c6d23; }
 
-        .nav-links a:hover {
-            color: #8c6d23; /* Đổi sang màu vàng nâu khi di chuột vào */
-        }
-
-        /* --- [MỚI] NÚT ZALO TRÊN MENU --- */
         .nav-links a.zalo-menu-btn {
-            background-color: #0068ff; /* Màu xanh dương chuẩn của Zalo */
-            color: #ffffff !important; /* Chữ màu trắng */
-            padding: 6px 16px; /* Tạo độ phồng cho nút */
-            border-radius: 25px; /* Bo góc tròn trịa như viên thuốc */
-            margin-left: 15px; /* Đẩy cách xa các menu thường ra một chút */
-            box-shadow: 0 4px 10px rgba(0, 104, 255, 0.3); /* Đổ bóng màu xanh tỏa ra xung quanh */
-            display: flex; 
-            align-items: center;
+            background-color: #0068ff; color: #ffffff !important;
+            padding: 6px 16px; border-radius: 25px; margin-left: 15px;
+            box-shadow: 0 4px 10px rgba(0, 104, 255, 0.3);
+            display: flex; align-items: center;
         }
-        /* Hiện và trang điểm cho nút Zalo nhỏ trên thanh menu điện thoại */
-            .mobile-zalo-btn {
-                display: block;
-                background-color: #0068ff; /* Màu xanh Zalo */
-                color: #ffffff !important;
-                text-decoration: none;
-                padding: 6px 14px;
-                border-radius: 20px; /* Bo góc tròn xoe */
-                font-family: 'Be Vietnam Pro', sans-serif;
-                font-size: 0.85rem;
-                font-weight: 500;
-                margin-left: auto; /* Đẩy nút này sát về bên phải */
-                margin-right: 15px; /* Cách nút 3 gạch một khoảng nhỏ */
-                box-shadow: 0 2px 8px rgba(0, 104, 255, 0.4);
-                letter-spacing: 0.5px;
-            }
+        .nav-links a.zalo-menu-btn:hover { background-color: #0054cc; transform: translateY(-2px); }
 
-        .nav-links a.zalo-menu-btn:hover {
-            background-color: #0054cc; /* Đậm màu hơn khi khách đưa chuột vào */
-            color: #ffffff;
-            transform: translateY(-2px); /* Hiệu ứng nảy lên nhẹ */
-        }
-       /* --- MÀN HÌNH CHÀO (SPLASH SCREEN) --- */
-        .splash-screen {
-            position: relative;
-            height: 100vh;
-            overflow: hidden; /* Cắt bỏ phần ảnh bị phình ra khi phóng to */
-        }
+        /* [QUAN TRỌNG] ẨN NÚT ZALO NHỎ VÀ NÚT 3 GẠCH TRÊN MÁY TÍNH */
+        .mobile-zalo-btn { display: none; }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: #333333; }
 
+        /* --- MÀN HÌNH CHÀO (SPLASH SCREEN) --- */
+        .splash-screen { position: relative; height: 100vh; overflow: hidden; }
         .splash-bg {
-            position: absolute;
-            /* CÀI ĐẶT MỚI: Làm ảnh cao hơn màn hình và đặt hơi nhô lên trên một chút */
-            top: -15vh;
-            left: 0;
-            width: 100%;
-            height: 130vh; /* Cao hơn màn hình 20% (để có "room" di chuyển lên mà không hở đáy) */
-            
+            position: absolute; top: -15vh; left: 0; width: 100%; height: 130vh; 
             background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('aria-back1.avif'); 
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-            /* XÓA transition cũ để JS điều khiển trực tiếp mượt mà hơn */
+            background-size: cover; background-position: center; z-index: -1;
         }
-
         .splash-content {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1; /* Nổi chữ lên trên ảnh */
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1;
         }
-
         .splash-logo { text-align: center; }
-        .logo-text {
-            font-family: 'Oswald', sans-serif; font-size: 4rem; color: #ffffff;
-            letter-spacing: 6px; font-weight: 500; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-        }
-
-        .scroll-icon {
-            position: absolute; bottom: 40px; color: #ffffff; font-size: 3rem;
-            animation: bounce 2s infinite; text-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-15px); }
-            60% { transform: translateY(-7px); }
-        }
-
-        .splash-logo { text-align: center; }
-
-        .logo-text {
-            font-family: 'Oswald', sans-serif;
-            font-size: 4rem; /* Chữ logo to rõ */
-            color: #ffffff;
-            letter-spacing: 6px;
-            font-weight: 500;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5); /* Đổ bóng nhẹ để nổi bật trên nền ảnh */
-        }
-
-        /* Biểu tượng cuộn xuống */
-        .scroll-icon {
-            position: absolute;
-            bottom: 40px; /* Cách đáy 40px */
-            color: #ffffff;
-            font-size: 3rem;
-            animation: bounce 2s infinite; /* Hiệu ứng nhấp nhô liên tục */
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-
-        /* Tạo hiệu ứng nhấp nhô cho nốt nhạc */
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-15px); }
-            60% { transform: translateY(-7px); }
-        }
+        .logo-text { font-family: 'Oswald', sans-serif; font-size: 4rem; color: #ffffff; letter-spacing: 6px; font-weight: 500; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .scroll-icon { position: absolute; bottom: 40px; color: #ffffff; font-size: 3rem; animation: bounce 2s infinite; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-15px); } 60% { transform: translateY(-7px); } }
 
         /* --- TẦNG 1: HERO BANNER --- */
         .hero {
-            height: 100vh;
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('bg-halong.jpg.png'); 
+            height: 100vh; background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('bg-halong.jpg.png'); 
             background-size: cover; background-position: center;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            padding: 0 20px; /* Thêm khoảng trống 2 bên để chữ không chạm lề khi xem trên điện thoại */
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px;
         }
-        
-        .hero-subtitle { 
-            font-size: 0.9rem; 
-            letter-spacing: 6px; /* Kéo giãn chữ ra một chút cho sang */
-            color: #d4af37; 
-            margin-bottom: 15px; 
-            font-weight: 400;
-        }
-        
-        .hero-title { 
-            font-family: 'Oswald', sans-serif; /* Áp dụng font dáng cao cho Tiêu đề */
-            font-size: 4.5rem; /* Chữ to hơn một chút */
-            font-weight: 400; 
-            margin-bottom: 5px; /* Kéo gần lại với dòng chữ bên dưới */
-            letter-spacing: 2px; 
-            text-transform: uppercase; 
-        }
-        
-        .hero-desc { 
-            font-size: 1.2rem; 
-            font-weight: 300; 
-            letter-spacing: 6px; 
-            color: #cccccc; 
-            text-transform: uppercase; 
-            margin-bottom: 30px; /* Tạo khoảng trống trước khi đến đoạn văn dài */
-        }
+        .hero-subtitle { font-size: 0.9rem; letter-spacing: 6px; color: #d4af37; margin-bottom: 15px; font-weight: 400; }
+        .hero-title { font-family: 'Oswald', sans-serif; font-size: 4.5rem; font-weight: 400; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
+        .hero-desc { font-size: 1.2rem; font-weight: 300; letter-spacing: 6px; color: #cccccc; text-transform: uppercase; margin-bottom: 30px; }
+        .hero-intro-text { font-family: 'Montserrat', sans-serif; font-size: 1.0rem; line-height: 1.9; max-width: 900px; font-weight: 350; color: #ffffff; letter-spacing: 0.5px; }
 
-        .hero-intro-text {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.0rem;
-            line-height: 1.9;
-            max-width: 900px; /* Gom chiều rộng lại một chút nữa cho giống ảnh gốc */
-            font-weight: 350; 
-            color: #ffffff;
-            letter-spacing: 0.5px;
-        }
-
-        /* --- PHẦN MỚI 1: VỊ TRÍ HÀNG GHẾ ĐẦU (Ảnh 386) --- */
-        .location-section {
-            background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%), url('vitri-ngoi.jfif');
-            background-size: cover; background-position: center; background-attachment: fixed;
-            padding: 120px 20px;
-        }
+        /* --- PHẦN MỚI 1, 2, 3: VỊ TRÍ, QUOTE, THỐNG KÊ --- */
+        .location-section { background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%), url('vitri-ngoi.jfif'); background-size: cover; background-position: center; background-attachment: fixed; padding: 120px 20px; }
         .location-content { max-width: 1200px; margin: auto; }
         .location-content h2 { font-size: 3rem; font-weight: 300; margin-bottom: 20px; text-transform: uppercase; }
         .location-content p { font-size: 1.1rem; line-height: 1.8; max-width: 600px; color: #e0e0e0; margin-bottom: 15px; }
-
-        /* --- PHẦN MỚI 2: TRÍCH DẪN CẢM HỨNG (Ảnh 385) --- */
         .quote-section { display: flex; background-color: #121212; }
         .quote-image { flex: 6; min-height: 500px; background-image: url('thap-bieutuong.jfif'); background-size: cover; background-position: center; }
-        .quote-box { flex: 4; background-color: #4a252f; /* Màu đỏ đô sang trọng */ padding: 80px 60px; display: flex; align-items: center; justify-content: center; }
+        .quote-box { flex: 4; background-color: #4a252f; padding: 80px 60px; display: flex; align-items: center; justify-content: center; }
         .quote-text { font-size: 1.2rem; line-height: 1.8; font-style: italic; color: #ecdfb5; position: relative; }
         .quote-text::before { content: "“"; font-size: 5rem; color: rgba(255,255,255,0.1); position: absolute; top: -40px; left: -20px; font-family: serif; }
-
-        /* --- PHẦN MỚI 3: THỐNG KÊ CHI TIẾT (Ảnh 387) --- */
-        .stats-section { background-color: #e6d8c8; /* Màu nền be/kem */ padding: 100px 20px; color: #333333; text-align: center; }
+        .stats-section { background-color: #e6d8c8; padding: 100px 20px; color: #333333; text-align: center; }
         .stats-header { max-width: 800px; margin: 0 auto 60px auto; }
         .stats-header h2 { font-size: 2.2rem; font-weight: 500; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
         .stats-header p { font-size: 1.1rem; line-height: 1.6; color: #555; }
-        
         .stats-grid { max-width: 1000px; margin: auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; row-gap: 60px; }
         .stat-item h3 { font-size: 1.8rem; font-weight: 400; color: #222; margin-bottom: 5px; }
         .stat-item p { font-size: 0.9rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- TẦNG 2 CŨ: KIẾN TRÚC --- */
+        /* --- TẦNG 2, 3, 4: KIẾN TRÚC, OVERVIEW, TIỆN ÍCH, LIÊN HỆ --- */
         .about-section { background-color: #6b5d53bb; padding: 100px 20px; }
         .about-container { max-width: 1200px; margin: auto; display: flex; align-items: center; gap: 60px; }
         .about-text { flex: 1; } .about-image { flex: 1; } 
@@ -308,58 +118,13 @@
         .section-desc { font-size: 1.1rem; line-height: 1.8; color: #cccccc; margin-bottom: 30px; }
         .feature-list { list-style-type: none; }
         .feature-list li { font-size: 1.1rem; color: #ffffff; margin-bottom: 15px; padding-left: 20px; border-left: 3px solid #d4af37; }
-
-        /* --- [MỚI] TỔNG QUAN VỊ TRÍ --- */
-        .overview-section {
-            background-color: #0b0b0b; /* Màu nền đen đồng bộ */
-            padding: 0; 
-        }
-        
-        .overview-container {
-            position: relative; /* Đặt mỏ neo để giữ các dòng chữ lại bên trong ảnh */
-            width: 100%; /* Cho ảnh rộng ra một chút để thấy rõ chi tiết */
-            margin: 0;
-        }
-
-        .overview-container img {
-            width: 100%;
-            display: block;
-            /* Đã xóa border-radius: 4px; */
-            border: none; /* [MỚI] Loại bỏ bất kỳ đường viền nào */
-            outline: none; /* [MỚI] Loại bỏ đường viền khi được chọn */
-        }
-
-        .floating-text {
-            position: absolute; /* Giúp chữ trôi nổi tự do trên mặt ảnh */
-            color: #ffffff;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9); /* Đổ bóng đen đậm để chữ đọc được trên mọi nền ảnh sáng/tối */
-            font-size: 1.05rem;
-            line-height: 1.5;
-        }
-
-        .floating-text h4 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 500;
-            color: #ffffff;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-        }
-
-        /* Chỉnh tọa độ từng khối chữ (Dùng % để khi thu phóng màn hình chữ vẫn ở đúng tỷ lệ) */
-        .text-1 { top: 10%; right: 20%; }
-        .text-2 { top: 30%; left: 30%; }
-        .text-3 { bottom: 37%; right: 15%; text-align: right; }
-        .text-4 { bottom: 22%; left: 55%; }
-        .text-1 h4 {
-            color: #1f1f1fdb;
-        }
-
-        .text-1 p {
-            color: #1f1f1fdb;
-        }
-
-        /* --- TẦNG 3 CŨ: TIỆN ÍCH --- */
+        .overview-section { background-color: #0b0b0b; padding: 0; }
+        .overview-container { position: relative; width: 100%; margin: 0; }
+        .overview-container img { width: 100%; display: block; border: none; outline: none; }
+        .floating-text { position: absolute; color: #ffffff; text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9); font-size: 1.05rem; line-height: 1.5; }
+        .floating-text h4 { font-family: 'Oswald', sans-serif; font-size: 1.4rem; font-weight: 500; color: #ffffff; margin-bottom: 5px; letter-spacing: 1px; }
+        .text-1 { top: 10%; right: 20%; } .text-2 { top: 30%; left: 30%; } .text-3 { bottom: 37%; right: 15%; text-align: right; } .text-4 { bottom: 22%; left: 55%; }
+        .text-1 h4 { color: #1f1f1fdb; } .text-1 p { color: #1f1f1fdb; }
         .amenities-section { padding: 100px 20px; background-color: #292828d4; }
         .amenities-container { max-width: 1200px; margin: auto; }
         .amenities-header { text-align: center; margin-bottom: 60px; }
@@ -370,8 +135,6 @@
         .amenity-content { padding: 25px; }
         .amenity-title { color: #ffffff; font-size: 1.5rem; margin-bottom: 10px; font-weight: 400; }
         .amenity-desc { color: #a0a0a0; font-size: 0.95rem; line-height: 1.6; }
-
-        /* --- TẦNG 4 CŨ: LIÊN HỆ & FOOTER --- */
         .contact-section { background-color: #3a3a3a; padding: 80px 20px; text-align: center; }
         .contact-form { max-width: 600px; margin: 0 auto; background-color: #1a1a1a; padding: 40px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .form-input { width: 100%; padding: 15px; margin-bottom: 20px; background-color: #2a2a2a; border: 1px solid #333; color: white; font-size: 1rem; border-radius: 4px; outline: none; }
@@ -382,218 +145,69 @@
         .footer-logo { color: #d4af37; font-size: 1.8rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; font-family: 'Oswald', sans-serif; }
         .footer-text { color: #888; font-size: 0.9rem; line-height: 1.8; }
         .footer-text a { color: #d4af37; text-decoration: none; }
-        /* Ẩn nút 3 gạch trên máy tính */
-        .menu-toggle {
-            display: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: #333333;
-        }
-        .mobile-zalo-btn {
-            display: none;
-        }
 
         /* =========================================
            THIẾT KẾ THÍCH ỨNG CHO ĐIỆN THOẠI (RESPONSIVE)
+           Tất cả những thứ trong này CHỈ CHẠY TRÊN ĐIỆN THOẠI
            ========================================= */
         @media screen and (max-width: 768px) {
-           /* --- MENU 3 GẠCH CHO ĐIỆN THOẠI --- */
-            .navbar { 
-                padding: 15px 20px; 
-                flex-direction: row; /* Ép Logo và Nút 3 gạch nằm ngang hàng nhau */
-                justify-content: space-between; /* Đẩy Logo sang trái, Nút sang phải */
-            }
             
-            .menu-toggle {
-                display: block; /* Hiện nút 3 gạch lên */
-            }
-
-            .nav-links {
-                display: none; /* Ẩn các chữ đi lúc mới vào trang */
-                flex-direction: column;
-                position: absolute; /* Thả trôi menu xuống dưới thanh logo */
-                top: 100%; 
-                left: 0;
-                width: 100%;
-                background-color: #e6d8c8;
-                padding: 0;
-                box-shadow: 0 10px 15px rgba(0,0,0,0.1); /* Đổ bóng cho menu nổi lên */
-                gap: 0;
-            }
-
-            /* Class này sẽ được JavaScript gọi tên để Mở menu ra */
-            .nav-links.show {
-                display: flex;
-            }
-
-            /* Biến các dòng chữ thành các "Nút bấm" to, dễ chạm */
-            .nav-links a {
-                padding: 18px 20px;
-                border-bottom: 1px solid #d4c4b4;
-                width: 100%;
-                text-align: center;
-                font-size: 1.1rem;
-            }
-
-            /* Định dạng lại nút Zalo cho màn hình điện thoại */
-            .nav-links a.zalo-menu-btn {
-                background-color: #0068ff;
-                border-radius: 0; /* Gỡ bỏ bo góc để nút tràn viền, vuông vức với menu dọc */
-                margin-left: 0;
-                margin-top: 10px; /* Cách các menu khác một chút xíu */
-                font-weight: bold;
-                letter-spacing: 1px;
-            }
-            /* --- SỬA LỖI ẢNH BÌA TRANG CHỦ BỊ ZOOM QUÁ TO TRÊN ĐIỆN THOẠI --- */
-            .splash-screen {
-                height: 90vh; /* Thu ngắn màn hình chào một chút để vừa vặn hơn */
-            }
+            /* --- MENU 3 GẠCH VÀ NÚT ZALO --- */
+            .navbar { padding: 15px 20px; flex-direction: row; justify-content: space-between; }
+            .menu-toggle { display: block; }
             
-            .splash-bg {
-                height: 100vh !important; /* Giảm mạnh độ cao của ảnh nền để trình duyệt không bị ép zoom lên nữa */
-                top: 0 !important; /* Đặt ảnh về lại vị trí chuẩn */
-                background-position: center !important; /* Ép tâm ảnh vào chính giữa */
+            /* [ĐÃ SỬA LỖI] Hiện và làm đẹp nút Zalo nhỏ trên điện thoại */
+            .mobile-zalo-btn {
+                display: block; background-color: #0068ff; color: #ffffff !important;
+                text-decoration: none; padding: 6px 14px; border-radius: 20px;
+                font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.85rem; font-weight: 500;
+                margin-left: auto; margin-right: 15px; box-shadow: 0 2px 8px rgba(0, 104, 255, 0.4);
             }
 
-            .logo-text {
-                font-size: 3rem !important; /* Thu nhỏ chữ ARIA BAY lại một chút để không che mất cảnh đẹp */
-            }
-            /* --- [MỚI] TỐI ƯU KHU VỰC "GIAI ĐIỆU TRÊN TẦNG KHÔNG" TRÊN ĐIỆN THOẠI --- */
-            .hero {
-                /* Đổi height thành min-height để trên các điện thoại màn hình ngắn, chữ không bị trôi ra ngoài ảnh */
-                height: auto; 
-                min-height: 100vh; 
-                padding: 120px 20px 60px 20px; /* Tạo khoảng trống ở trên để không bị thanh menu đè vào */
-            }
+            .nav-logo-image { height: 45px; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: #e6d8c8; padding: 0; box-shadow: 0 10px 15px rgba(0,0,0,0.1); gap: 0; }
+            .nav-links.show { display: flex; }
+            .nav-links a { padding: 18px 20px; border-bottom: 1px solid #d4c4b4; width: 100%; text-align: center; font-size: 1.1rem; }
+            .nav-links a.zalo-menu-btn { background-color: #0068ff; border-radius: 0; margin-left: 0; margin-top: 10px; font-weight: bold; letter-spacing: 1px; justify-content: center;}
 
-            .hero-title {
-                font-size: 2.2rem !important; /* Thu nhỏ tiêu đề chính cho vừa vặn màn hình */
-                line-height: 1.3;
-                margin-bottom: 10px;
-                letter-spacing: 1px !important; /* Giảm độ giãn chữ */
-            }
+            /* --- [ĐÃ SỬA LỖI] THU NGẮN ẢNH BÌA ĐỂ KHÔNG BỊ ZOOM --- */
+            /* Ảnh màn hình chào */
+            .splash-screen { height: 55vh; } 
+            .splash-bg { height: 65vh !important; top: 0 !important; background-position: center !important; }
+            .logo-text { font-size: 3rem !important; }
 
-            .hero-subtitle, .hero-desc {
-                font-size: 0.85rem !important;
-                letter-spacing: 3px !important; /* Giảm độ giãn chữ để tránh bị rớt dòng lộn xộn */
-                margin-bottom: 20px;
-            }
-
-            .hero-intro-text {
-                font-size: 0.95rem !important;
-                line-height: 1.6;
-                text-align: justify; /* Căn đều 2 bên mép cho khối chữ vuông vắn, giống như đọc tạp chí */
-                padding: 0 10px; /* Ép chữ hẹp lại một chút xíu so với mép màn hình */
-            }
+            /* Ảnh khu vực Hero (Giai điệu trên tầng không) */
+            .hero { height: auto; min-height: 55vh; padding: 100px 15px 40px 15px; }
+            .hero-title { font-size: 2.2rem !important; line-height: 1.3; margin-bottom: 10px; letter-spacing: 1px !important; }
+            .hero-subtitle, .hero-desc { font-size: 0.85rem !important; letter-spacing: 3px !important; margin-bottom: 20px; }
+            .hero-intro-text { font-size: 0.95rem !important; line-height: 1.6; text-align: justify; padding: 0 10px; }
             
-            body { padding-top: 60px; } /* Trả lại khoảng cách chuẩn cho thân trang */
+            body { padding-top: 60px; } 
 
-            /* 3. Cho ảnh và chữ phóng to chiếm trọn 100% chiều ngang điện thoại */
             .tower-image-col, .tab-image, .overview-image { width: 100%; flex: auto; }
             .tower-text-col, .tab-info, .overview-details { width: 100%; flex: auto; padding: 0 10px; }
-
-            /* 4. Sửa các bảng thống kê từ 2 cột nhập lại thành 1 cột */
             .stats-grid, .amenities-grid { grid-template-columns: 1fr; gap: 15px; }
             .stat-box.full-width { grid-column: span 1; }
-
-            /* 5. Thu nhỏ chữ Tiêu đề và Nút bấm cho thanh thoát */
             .overview-details h2, .floorplan-container h2 { font-size: 2rem; text-align: center; }
             .tab-menu, .tower-menu { flex-wrap: wrap; gap: 10px; }
             .tab-button, .tower-button { padding: 8px 15px; font-size: 0.95rem; }
-            
-            /* 6. Thu hẹp khoảng trống 2 bên mép màn hình */
             .product-section, .project-overview, .floorplan-section { padding: 40px 10px; }
             .product-intro { padding: 0 10px; }
-
-            /* --- 1. SỬA LỖI KHỐI QUOTE (Hàng ghế đầu) --- */
-        .quote-section {
-            flex-direction: column; /* Ép ảnh và chữ xếp thành hàng dọc */
-        }
-        .quote-image {
-            width: 100% !important; /* Ảnh bung full 100% màn hình */
-            height: 250px; /* Thiết lập chiều cao vừa phải để không bị kéo giãn */
-        }
-        .quote-box {
-            width: 100% !important; /* Khối chữ màu đỏ bung full 100% màn hình */
-            padding: 40px 20px; /* Căn lề lại cho thoáng đãng */
-        }
-        .quote-text {
-            font-size: 1.05rem; /* Điều chỉnh lại cỡ chữ */
-            text-align: justify; /* Căn đều 2 mép cho vuông vức, sang trọng */
-            line-height: 1.6;
-        }
-
-        /* --- 2. SỬA LỖI OVERVIEW (Chữ đè lên ảnh) --- */
-        .overview-container {
-            display: flex;
-            flex-direction: column; /* Ảnh ở trên, chữ xếp dọc ở dưới */
-            background-color: #121212; /* Nền đen đồng bộ */
-            padding-bottom: 20px;
-        }
-        .overview-container img {
-            width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-        }
-        /* Gỡ bỏ tính năng "Trôi nổi" (Absolute) của chữ trên điện thoại */
-        .floating-text {
-            position: relative !important; 
-            top: auto !important;
-            bottom: auto !important;
-            left: auto !important;
-            right: auto !important;
-            transform: none !important;
-            width: 100%;
-            padding: 15px 20px;
-            background: none;
-            border-left: 4px solid #d4af37; /* Thêm vạch màu vàng bên trái để trang trí */
-            margin-bottom: 10px;
-            text-align: left;
-        }
-        .floating-text h4 {
-            font-size: 1.1rem;
-            color: #d4af37;
-            margin-bottom: 5px;
-        }
-        .floating-text p {
-            font-size: 0.95rem;
-            color: #ccc;
-        }
-        /* --- 3. SỬA LỖI KHỐI THIẾT KẾ ĐỘC BẢN --- */
-        .about-container {
-            flex-direction: column; /* Phá vỡ bố cục ngang, xếp thành hàng dọc */
-            gap: 30px; /* Tạo khoảng cách an toàn giữa chữ và ảnh */
-            padding: 20px 10px;
-        }
-
-        .about-text {
-            width: 100% !important; /* Ép khối chữ bung rộng 100% màn hình */
-            padding: 0 !important;
-            text-align: justify; /* Căn lề 2 bên cho khối chữ vuông vức */
-        }
-
-        .about-image {
-            width: 100% !important; /* Ép khối ảnh bung rộng 100% */
-            padding: 0 !important;
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px; /* Bo góc ảnh nhẹ nhàng cho đẹp mắt */
-        }
-
-        /* Chỉnh lại cỡ chữ cho tiêu đề và nội dung vừa vặn với mắt nhìn trên điện thoại */
-        .section-title {
-            font-size: 2rem !important;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .section-desc {
-            font-size: 1.05rem;
-            line-height: 1.6;
-        }
+            .quote-section { flex-direction: column; }
+            .quote-image { width: 100% !important; height: 250px; }
+            .quote-box { width: 100% !important; padding: 40px 20px; }
+            .quote-text { font-size: 1.05rem; text-align: justify; line-height: 1.6; }
+            .overview-container { display: flex; flex-direction: column; background-color: #121212; padding-bottom: 20px; }
+            .overview-container img { width: 100%; height: auto; margin-bottom: 20px; }
+            .floating-text { position: relative !important; top: auto !important; bottom: auto !important; left: auto !important; right: auto !important; transform: none !important; width: 100%; padding: 15px 20px; background: none; border-left: 4px solid #d4af37; margin-bottom: 10px; text-align: left; }
+            .floating-text h4 { font-size: 1.1rem; color: #d4af37; margin-bottom: 5px; }
+            .floating-text p { font-size: 0.95rem; color: #ccc; }
+            .about-container { flex-direction: column; gap: 30px; padding: 20px 10px; }
+            .about-text { width: 100% !important; padding: 0 !important; text-align: justify; }
+            .about-image { width: 100% !important; padding: 0 !important; }
+            .about-image img { width: 100%; height: auto; border-radius: 8px; }
+            .section-title { font-size: 2rem !important; text-align: center; margin-bottom: 20px; }
+            .section-desc { font-size: 1.05rem; line-height: 1.6; }
         }
     </style>
 </head>
