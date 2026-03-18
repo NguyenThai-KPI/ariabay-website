@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sản Phẩm - Aria Bay</title>
-    
+    <link rel="icon" href="logo-aria.png" type="image/png">
+
+    <meta property="og:title" content="Aria Bay - Tinh Hoa Kiến Trúc Vịnh Di Sản">
+    <meta property="og:description" content="Tòa tháp biểu tượng tại Marina Bayfront District. Sở hữu tầm nhìn Panorama bao trọn Vịnh Hạ Long cùng hệ sinh thái tiện ích 5 sao đặc quyền.">
+    <meta property="og:image" content="https://tên-link-vercel-của-bạn.vercel.app/banner-link.jpg">
+    <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
@@ -18,11 +23,54 @@
             color: #333333; /* Chữ màu xám đậm cho dễ đọc trên nền sáng */
         }
 
-        .navbar { position: fixed; top: 0; left: 0; width: 100%; background-color: #e6d8c8; padding: 15px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .nav-logo { font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 500; color: #333333; letter-spacing: 2px; }
-        .nav-links { display: flex; gap: 35px; }
-        .nav-links a { text-decoration: none; color: #333333; font-family: 'Oswald', sans-serif; font-size: 1.1rem; font-weight: 500; text-transform: uppercase; transition: color 0.3s; }
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; background-color: #e6d8c8; padding: 0px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            text-decoration: none; /* Xóa gạch chân của link */
+        }
+
+        .nav-logo-image {
+            /* Bạn có thể tăng giảm số 50px này để logo to/nhỏ tùy ý */
+            height: 75px; 
+            width: auto; /* Tự động tính chiều rộng để ảnh không bị méo */
+            object-fit: contain;
+            transition: transform 0.3s ease; /* Thêm hiệu ứng khi di chuột */
+        }
+
+        .nav-logo-image:hover {
+            transform: scale(1.05); /* Phóng to nhẹ khi di chuột vào */
+        }
+
+        /* --- [MỚI] TỐI ƯU LOGO TRÊN ĐIỆN THOẠI --- */
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 10px 20px; /* Thu hẹp menu một chút */
+            }
+            .nav-logo-image {
+                height: 45px; /* Logo nhỏ hơn một chút trên điện thoại cho thanh thoát */
+            }
+        }
+        .nav-links { display: flex; gap: 35px; align-items: center;}
+        .nav-links a { text-decoration: none; color: #333333; font-family: 'Oswald', sans-serif; font-size: 1.1rem; font-weight: 300; text-transform: uppercase; transition: color 0.3s; }
         .nav-links a:hover { color: #8c6d23; }
+        /* --- [MỚI] NÚT ZALO TRÊN MENU --- */
+        .nav-links a.zalo-menu-btn {
+            background-color: #0068ff; /* Màu xanh dương chuẩn của Zalo */
+            color: #ffffff !important; /* Chữ màu trắng */
+            padding: 6px 16px; /* Tạo độ phồng cho nút */
+            border-radius: 25px; /* Bo góc tròn trịa như viên thuốc */
+            margin-left: 15px; /* Đẩy cách xa các menu thường ra một chút */
+            box-shadow: 0 4px 10px rgba(0, 104, 255, 0.3); /* Đổ bóng màu xanh tỏa ra xung quanh */
+            display: flex; 
+            align-items: center;
+        }
+
+        .nav-links a.zalo-menu-btn:hover {
+            background-color: #0054cc; /* Đậm màu hơn khi khách đưa chuột vào */
+            color: #ffffff;
+            transform: translateY(-2px); /* Hiệu ứng nảy lên nhẹ */
+        }
         
         footer { background-color: #3e2129; padding: 40px 20px; text-align: center; border-top: 1px solid rgba(0,0,0,0.1); margin-top: 100px; color: #ffffff;}
         .footer-logo { color: #d4af37; font-size: 1.8rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; font-family: 'Oswald', sans-serif; }
@@ -76,7 +124,7 @@
         /* --- [MỚI] THÔNG TIN TỔNG QUAN DỰ ÁN --- */
         .project-overview {
             background-color: #b4bcc8; /* Màu nền xanh xám nhạt y như ảnh tham khảo */
-            padding: 80px 20px;
+            padding: 120px 20px;
             color: #333333;
         }
 
@@ -405,6 +453,15 @@
                 font-size: 1.1rem;
             }
             
+            /* Định dạng lại nút Zalo cho màn hình điện thoại */
+            .nav-links a.zalo-menu-btn {
+                background-color: #0068ff;
+                border-radius: 0; /* Gỡ bỏ bo góc để nút tràn viền, vuông vức với menu dọc */
+                margin-left: 0;
+                margin-top: 10px; /* Cách các menu khác một chút xíu */
+                font-weight: bold;
+                letter-spacing: 1px;
+            }
             body { padding-top: 60px; } /* Trả lại khoảng cách chuẩn cho thân trang */
             /* --- [QUAN TRỌNG] Bẻ gãy bố cục 2 cột ngang thành hàng dọc --- */
             .tab-content.active,
@@ -437,8 +494,10 @@
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="nav-logo">ARIA BAY</div>
+<header class="navbar">
+        <a href="index.html" class="logo-wrapper">
+            <img src="logo-chinh.png" alt="Aria Bay Logo" class="nav-logo-image">
+        </a>
         
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
         
@@ -449,6 +508,8 @@
             <a href="tien-ich.html">TIỆN ÍCH</a>
             <a href="san-pham.html">SẢN PHẨM</a>
             <a href="index.html#lien-he">LIÊN HỆ</a>
+
+            <a href="https://zalo.me/0782145432" target="_blank" class="zalo-menu-btn">NHẬN TƯ VẤN QUA ZALO</a>
         </nav>
     </header>
 
