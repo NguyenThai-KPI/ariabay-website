@@ -16,8 +16,113 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     
    <style>
+    
         /* --- TẦNG 0: CÀI ĐẶT CHUNG --- */
-        section[id] { scroll-margin-top: 50px; }
+        /* --- MỚI: TỔNG QUAN VỊ TRÍ (BẢN ĐỒ LỚN - CÁC HỘP VĂN BẢN XUNG QUANH) --- */
+        /* --- SỬA LẠI: TỔNG QUAN VỊ TRÍ (BẢN ĐỒ TRỐNG - MÔ TẢ Ở DƯỚI) --- */
+        section.overview-section[id="vi-tri"] { 
+            background-color: #f7f3ed; /* Màu nền kem sang trọng, không trùng nền web */
+            padding: 90px 20px; /* Tăng mạnh khoảng cách trên và dưới cho thoáng đãng, không bị hẹp */
+        }
+
+        .section-title-wrapper {
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            text-align: center;
+        }
+
+        .main-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.8rem;
+            color: #3e2129; /* Tiêu đề màu đỏ đô quyền lực của dự án */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .intro-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555; /* Chữ dẫn sang Xám đậm cho dễ đọc */
+            text-align: center;
+        }
+        
+        .map-layout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column; /* Xếp dọc: Bản đồ trên, Mô tả dưới */
+            gap: 40px; /* Khoảng cách giữa bản đồ và danh sách */
+        }
+
+        /* Cột bên trên: Bản đồ sơ đồ vị trí lớn hơn */
+        .map-full-container {
+            width: 100%;
+            border-radius: 8px; /* Bo góc ảnh nhẹ nhàng cho đẹp mắt */
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Đổ bóng nhẹ nhàng */
+        }
+
+        .map-full-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: none;
+            outline: none;
+        }
+
+        /* Cột bên dưới: Danh sách mô tả */
+        .location-description-container {
+            width: 100%;
+            background-color: #ffffff; /* Nền trắng nổi bật trên nền kem */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2); /* Đổ bóng nổi khối 3D */
+            color: #333333;
+            text-align: left;
+        }
+
+        .description-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.7rem;
+            color: #3e2129; /* Tiêu đề màu đỏ đô */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .description-list {
+            list-style-type: none;
+        }
+
+        .description-list li {
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #555;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .list-icon { font-size: 1.5rem; color: #d4af37; } /* Ví dụ biểu tượng Vàng Rồng */
+
+        /* --- [RESPONSIVE] SẮP XẾP LẠI TRÊN ĐIỆN THOẠI --- */
+        @media screen and (max-width: 768px) {
+            .overview-section { padding: 40px 10px; margin: 20px auto; }
+            .section-header h2 { font-size: 2rem; }
+            
+            .map-layout-container { gap: 20px; }
+            
+            .map-full-container { margin-bottom: 20px; }
+            
+            .location-description-container { padding: 30px 20px; }
+            
+            .description-title { font-size: 0.2rem !important; text-align: center; }
+            .description-list li { font-size: 0.95rem; text-align: justify; }
+            .list-icon { font-size: 1.1rem; }
+        }
         
         .map-section {
             width: 100%; background-color: #0b0b0b; padding: 0; display: flex; justify-content: center;
@@ -86,7 +191,7 @@
             background-size: cover; background-position: center;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px;
         }
-        .hero-subtitle { font-size: 0.9rem; letter-spacing: 6px; color: #d4af37; margin-bottom: 15px; font-weight: 400; }
+        .hero-subtitle { font-size: 0.9rem; letter-spacing: 6px; color: #ffffff; margin-bottom: 15px; font-weight: 400; }
         .hero-title { font-family: 'Oswald', sans-serif; font-size: 4.5rem; font-weight: 400; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
         .hero-desc { font-size: 1.2rem; font-weight: 300; letter-spacing: 6px; color: #cccccc; text-transform: uppercase; margin-bottom: 30px; }
         .hero-intro-text { font-family: 'Montserrat', sans-serif; font-size: 1.0rem; line-height: 1.9; max-width: 900px; font-weight: 350; color: #ffffff; letter-spacing: 0.5px; }
@@ -114,7 +219,7 @@
         .about-container { max-width: 1200px; margin: auto; display: flex; align-items: center; gap: 60px; }
         .about-text { flex: 1; } .about-image { flex: 1; } 
         .about-image img { width: 100%; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .section-title { color: #d4af37; font-size: 2.5rem; margin-bottom: 20px; font-weight: 300; text-transform: uppercase;}
+        .section-title { color: #ffffff; font-size: 2.5rem; margin-bottom: 20px; font-weight: 300; text-transform: uppercase;}
         .section-desc { font-size: 1.1rem; line-height: 1.8; color: #cccccc; margin-bottom: 30px; }
         .feature-list { list-style-type: none; }
         .feature-list li { font-size: 1.1rem; color: #ffffff; margin-bottom: 15px; padding-left: 20px; border-left: 3px solid #d4af37; }
@@ -125,7 +230,7 @@
         .floating-text h4 { font-family: 'Oswald', sans-serif; font-size: 1.4rem; font-weight: 500; color: #ffffff; margin-bottom: 5px; letter-spacing: 1px; }
         .text-1 { top: 10%; right: 20%; } .text-2 { top: 30%; left: 30%; } .text-3 { bottom: 37%; right: 15%; text-align: right; } .text-4 { bottom: 22%; left: 55%; }
         .text-1 h4 { color: #1f1f1fdb; } .text-1 p { color: #1f1f1fdb; }
-        .amenities-section { padding: 100px 20px; background-color: #292828d4; }
+        .amenities-section { padding: 100px 20px; background-color: #4a252f; }
         .amenities-container { max-width: 1200px; margin: auto; }
         .amenities-header { text-align: center; margin-bottom: 60px; }
         .amenities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
@@ -135,12 +240,72 @@
         .amenity-content { padding: 25px; }
         .amenity-title { color: #ffffff; font-size: 1.5rem; margin-bottom: 10px; font-weight: 400; }
         .amenity-desc { color: #a0a0a0; font-size: 0.95rem; line-height: 1.6; }
-        .contact-section { background-color: #3a3a3a; padding: 80px 20px; text-align: center; }
-        .contact-form { max-width: 600px; margin: 0 auto; background-color: #1a1a1a; padding: 40px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .form-input { width: 100%; padding: 15px; margin-bottom: 20px; background-color: #2a2a2a; border: 1px solid #333; color: white; font-size: 1rem; border-radius: 4px; outline: none; }
-        .form-input:focus { border-color: #d4af37; }
-        .submit-btn { width: 100%; padding: 15px; background-color: #d4af37; color: #0b0b0b; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: background-color 0.3s; }
-        .submit-btn:hover { background-color: #b5952f; }
+        /* --- MỚI: LIÊN HỆ (BỐ CỤC 2 CỘT) --- */
+        .contact-section { 
+            background-color: #ffffffcf; /* Đổi nền sang be sáng cho đồng bộ và sạch sẽ */
+            padding: 100px 20px; 
+            color: #333333; 
+        }
+        
+        .contact-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 60px;
+            align-items: center; /* Căn giữa 2 cột theo chiều dọc */
+        }
+
+        .contact-info { flex: 1; text-align: left; }
+        .contact-info h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.8rem;
+            color: #3e2129; /* Tiêu đề màu đỏ đô */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .contact-info p { font-size: 1.05rem; line-height: 1.8; color: #555; margin-bottom: 25px; text-align: justify;}
+        .contact-info ul { list-style-type: none; }
+        .contact-info ul li { margin-bottom: 15px; font-size: 1.05rem; position: relative; padding-left: 20px; line-height: 1.6;}
+        /* --- HIỆU ỨNG DI CHUỘT CHO CÁC ĐƯỜNG LINK TRONG PHẦN LIÊN HỆ --- */
+        .contact-info ul li a {
+            transition: all 0.3s ease; /* Tạo hiệu ứng chuyển màu từ từ, mượt mà (không bị chớp giật) */
+        }
+
+        .contact-info ul li a:hover {
+            color: #d4af37 !important; /* [QUAN TRỌNG] Dùng !important để "đánh bại" màu gốc, ép nó chuyển sang màu Vàng Rồng */
+            text-decoration: underline !important; /* Thêm gạch chân khi di chuột để khách biết đây là link có thể bấm được */
+        }
+        .contact-info ul li::before { content: "•"; position: absolute; left: 0; color: #000000; font-size: 1.5rem; top: -5px;}
+        .contact-info ul li strong { color: #222; }
+
+        .contact-form-wrapper {
+            flex: 1;
+            background: linear-gradient(135deg, #4a252f 0%, #3e2129 100%); /* Màu nền đỏ đô sang trọng giống mẫu */
+            padding: 50px 40px;
+            border-radius: 12px; /* Bo góc to hơn cho mềm mại */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2); /* Đổ bóng nổi khối 3D */
+            color: #ffffff;
+            text-align: center;
+            width: 100%;
+        }
+        .contact-form-wrapper h3 { font-family: 'Oswald', sans-serif; font-size: 1.8rem; margin-bottom: 10px; letter-spacing: 1px;}
+        .contact-form-wrapper p { font-size: 0.95rem; color: #e0e0e0; margin-bottom: 30px; line-height: 1.6;}
+        
+        .form-input {
+            width: 100%; padding: 15px; margin-bottom: 20px; 
+            background-color: #ffffff; /* Ô nhập liệu màu trắng dễ nhìn */
+            border: 1px solid #ccc; 
+            color: #333333; font-size: 1rem; border-radius: 6px; outline: none; 
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+        .form-input:focus { border-color: #cfb253; box-shadow: 0 0 8px rgba(212, 175, 55, 0.5); }
+        .submit-btn {
+            width: 100%; padding: 15px; background-color: #d4af37; color: #ffffff; 
+            font-size: 1.1rem; font-weight: bold; border: none; border-radius: 6px; 
+            cursor: pointer; text-transform: uppercase; transition: all 0.3s ease; 
+            font-family: 'Oswald', sans-serif; letter-spacing: 1px;
+        }
+        .submit-btn:hover { background-color: #b5952f; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.3);}        .submit-btn:hover { background-color: #b5952f; }
         footer { background-color: #3e2129; padding: 40px 20px; text-align: center; border-top: 1px solid #222; }
         .footer-logo { color: #d4af37; font-size: 1.8rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; font-family: 'Oswald', sans-serif; }
         .footer-text { color: #888; font-size: 0.9rem; line-height: 1.8; }
@@ -208,6 +373,12 @@
             .about-image img { width: 100%; height: auto; border-radius: 8px; }
             .section-title { font-size: 2rem !important; text-align: center; margin-bottom: 20px; }
             .section-desc { font-size: 1.05rem; line-height: 1.6; }
+            /* Định dạng lại khối liên hệ 2 cột trên điện thoại */
+            .contact-layout { flex-direction: column !important; gap: 40px; }
+            .contact-info { text-align: center; }
+            .contact-info p { text-align: justify; }
+            .contact-info ul li { text-align: left; }
+            .contact-form-wrapper { padding: 30px 20px; }
         }
     </style>
 </head>
@@ -344,16 +515,35 @@
         </div>
     </section>
 
-   <section class="map-section" id="vi-tri">
-        <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3725.9708450020275!2d107.0077570778573!3d20.953685940553083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjDCsDU3JzEzLjMiTiAxMDfCsDAwJzQ1LjUiRQ!5e0!3m2!1svi!2s!4v1773666398514!5m2!1svi!2s" 
-            width="100%" 
-            height="700" 
-            style="border:0; filter: contrast(1.1) grayscale(0.1);" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+    <section class="overview-section" id="vi-tri">
+        <div class="section-title-wrapper">
+            <h2 class="main-title">TỔNG QUAN VỊ TRÍ</h2>
+            <p class="intro-text">
+                Aria Bay sở hữu vị trí đắc địa của "hàng ghế đầu", hòa mình vào thiên nhiên với tầm nhìn bao quát và thừa hưởng trọn vẹn hệ sinh thái của tổ hợp Marina Bayfront District.
+            </p>
+        </div>
+
+        <div class="map-layout-container">
+            <div class="map-full-container">
+                <img src="vitri-aria.webp" alt="Sơ đồ vị trí dự án Aria Bay" class="map-full-image">
+            </div>
+
+            <div class="location-description-container">
+                <h3 class="description-title">ĐIỂM NHẤN VỊ TRÍ CỦA ARIA BAY HẠ LONG*</h3>
+                <ul class="description-list">
+                    <li>- Nằm ngay trung tâm bán đảo 3 – khu đất ven biển cuối cùng tại Halong Marina.</li>
+                    <li>- Trước mặt là vịnh, phía sau là trục đô thị, bên cạnh là hồ cảnh quan.</li>
+                    <li>- Kết nối trực tiếp đại lộ Hoàng Quốc Việt – trục phát triển du lịch Hạ Long.</li>
+                </ul>
+                <h3 class="description-title">Từ Aria Bay Hạ Long, cư dân có thể di chuyển nhanh đến các điểm trọng yếu:</h3>
+                <ul class="description-list">
+                    <li>- 100m đến Hạ Long Marine Plaza – trung tâm thương mại và giải trí lớn của khu vực.</li>
+                    <li>- 3km đến Sun World Hạ Long Park – tổ hợp vui chơi thu hút hàng triệu du khách mỗi năm.</li>
+                    <li>- 4km đến Tuần Châu – trung tâm sự kiện, du lịch và bến du thuyền quốc tế.</li>
+                    <li>- Liền kề khu nghỉ dưỡng cao cấp và khách sạn 5 sao như New World Hạ Long.</li>
+                </ul>
+            </div>
+        </div>
     </section>
 
     <section class="amenities-section">
@@ -389,24 +579,36 @@
     </section>
 
     <section class="contact-section" id="lien-he">
-        <div class="amenities-header">
-            <p class="hero-subtitle">LIÊN HỆ ĐỂ ĐƯỢC TƯ VẤN CHI TIẾT</p>
-            <h2 class="section-title">Nhập Thông Tin Liên Hệ</h2>
+        <div class="contact-layout">
+            <div class="contact-info">
+                <h2>LIÊN HỆ TƯ VẤN</h2>
+                <p>Quý khách hàng cần tư vấn về dự án căn hộ Aria Bay, vui lòng liên hệ với em Nam để được hỗ trợ thông tin mới nhất về mặt bằng, bảng giá, chính sách ưu đãi.</p>
+                <ul>
+                    <li><strong>Địa chỉ: </strong> Bán đảo 3 KĐT Hạ Long Marina, P. Bãi Cháy, TP. Hạ Long</li>
+                     <li><strong>Google Maps:</strong> <a href="https://maps.app.goo.gl/MjtQbbpCk8mfMnkj9"target="_blank" style="color: #be9d31; text-decoration: none;"> Aria Bay Tower Hạ Long</a></li>
+                    <li><strong>Website: </strong><a href="https://ariabay-website.vercel.app/"target="_blank" style="color: #be9d31; text-decoration: none;">https://ariabay-website.vercel.app/</a></li>
+                    <li><strong>Hotline: </strong> 0782.145.432</li>
+                    <li><strong>Email: </strong> nguyennam20001020@gmail.com</li>
+                    <li><strong>Fanpage: </strong> <a href="https://www.facebook.com/share/1HR28WSmP5/" target="_blank">Nam Vượng Gia Land</a>.</li>
+                </ul>
+            </div>
+
+            <div class="contact-form-wrapper">
+                <h3>ĐĂNG KÝ THAM QUAN CĂN HỘ MẪU</h3>
+                <p>Quý khách có nhu cầu tham quan căn hộ mẫu vui lòng để lại thông tin theo biểu mẫu bên dưới.</p>
+                <form class="contact-form" action="https://formsubmit.co/nguyennam20001020@gmail.com" method="POST">
+                    <input type="text" name="Họ_Tên" class="form-input" placeholder="Họ tên của bạn *" minlength="2" required>
+                    <input type="tel" name="Số_Điện_Thoại" class="form-input" placeholder="Số điện thoại *" pattern="(0)[0-9]{9}" title="Vui lòng nhập đúng 10 chữ số, bắt đầu bằng số 0" required>
+                    <input type="email" name="Email_Khách" class="form-input" placeholder="Email (Không bắt buộc)">
+                    
+                    <input type="text" name="_honey" style="display:none">
+                    <input type="hidden" name="_captcha" value="true">
+                    <input type="hidden" name="_subject" value="CÓ KHÁCH HÀNG MỚI ĐĂNG KÝ TƯ VẤN ARIA BAY!">
+                    
+                    <button type="submit" class="submit-btn">GỬI THÔNG TIN</button>
+                </form>
+            </div>
         </div>
-        <form class="contact-form" action="https://formsubmit.co/nguyennam20001020@gmail.com" method="POST">
-            <input type="text" name="Họ_Tên" class="form-input" placeholder="Họ và tên của bạn *" minlength="2" required>
-            
-            <input type="tel" name="Số_Điện_Thoại" class="form-input" placeholder="Số điện thoại liên hệ *" pattern="(0)[0-9]{9}" title="Vui lòng nhập đúng 10 chữ số, bắt đầu bằng số 0" required>
-            
-            <input type="email" name="Email_Khách" class="form-input" placeholder="Email (Không bắt buộc)">
-            
-            <input type="text" name="_honey" style="display:none">
-            
-            <input type="hidden" name="_captcha" value="true">
-            
-            <input type="hidden" name="_subject" value="CÓ KHÁCH HÀNG MỚI ĐĂNG KÝ TƯ VẤN ARIA BAY!">
-            <button type="submit" class="submit-btn">Gửi thông tin</button>
-        </form>
     </section>
 
     <footer>
