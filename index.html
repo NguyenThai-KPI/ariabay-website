@@ -110,7 +110,11 @@
 
         /* --- [RESPONSIVE] SẮP XẾP LẠI TRÊN ĐIỆN THOẠI --- */
         @media screen and (max-width: 768px) {
-            .overview-section { padding: 40px 10px; margin: 20px auto; }
+            /* Sửa khoảng hở của phần Tầm nhìn Panorama (nền đen) */
+            .overview-section { padding: 40px 0; margin: 0; } 
+            
+            /* [QUAN TRỌNG] Ép phần Bản đồ Vị trí (nền kem) phải thu hẹp khoảng trống trên điện thoại */
+            section.overview-section[id="vi-tri"] { padding: 40px 10px; margin: 0; }
             .section-header h2 { font-size: 2rem; }
             
             .map-layout-container { gap: 20px; }
